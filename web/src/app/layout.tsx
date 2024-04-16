@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
-import { Saira_Extra_Condensed, Saira } from "next/font/google";
+import { Saira } from "next/font/google";
 import "./globals.css";
 
 const saira = Saira({
-  weight: ["400", "500"],
-  subsets: ["latin"],
-});
-
-const sairaCondensed = Saira_Extra_Condensed({
   weight: ["400", "500"],
   subsets: ["latin"],
 });
@@ -34,15 +29,30 @@ export const metadata: Metadata = {
   icons,
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function Home({
+  header,
+  about,
+  projects,
+  experience,
+  availability,
+  footer,
+}: {
+  header: React.ReactNode;
+  about: React.ReactNode;
+  projects: React.ReactNode;
+  experience: React.ReactNode;
+  availability: React.ReactNode;
+  footer: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body className={`${saira.className} ${sairaCondensed.className}`}>
-        {children}
+      <body className={saira.className}>
+        {header}
+        {about}
+        {projects}
+        {experience}
+        {availability}
+        {footer}
       </body>
     </html>
   );

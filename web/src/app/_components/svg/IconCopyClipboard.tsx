@@ -1,12 +1,6 @@
-import type { NextPage } from 'next';
-import React from 'react';
-import colors from '@/config/colors.json';
+import React from "react";
 
-type Props = {
-  size: string;
-};
-
-const Svg: NextPage<Props> = ({ size }) => {
+export default function Svg({ size }: { size: string }) {
   return (
     <>
       <svg
@@ -29,27 +23,6 @@ const Svg: NextPage<Props> = ({ size }) => {
           strokeLinejoin="round"
         />
       </svg>
-      <style jsx>{`
-        #icon-copy-clipboard {
-          stroke: ${colors.light.text_primary_color};
-        }
-
-        #icon-copy-clipboard:hover {
-          stroke: ${colors.light.text_active_color};
-        }
-
-        @media (prefers-color-scheme: dark) {
-          #icon-copy-clipboard {
-            stroke: ${colors.dark.text_primary_color};
-          }
-
-          #icon-copy-clipboard:hover {
-            stroke: ${colors.dark.text_active_color};
-          }
-        }
-      `}</style>
     </>
   );
-};
-
-export default Svg;
+}

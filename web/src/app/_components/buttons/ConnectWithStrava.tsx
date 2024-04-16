@@ -1,9 +1,7 @@
-import Image from 'next/image';
-import stravaSettings from '@/services/strava/settings.json';
+import Image from "next/image";
+import stravaSettings from "@/services/strava/settings.json";
 
-type Props = {};
-
-const ConnectWithStrava = ({}: Props) => {
+export default function ConnectWithStrava() {
   const envStravaSettings = stravaSettings[process.env.NODE_ENV];
   return (
     <>
@@ -19,6 +17,4 @@ const ConnectWithStrava = ({}: Props) => {
       </a>
     </>
   );
-};
-
-export default ConnectWithStrava;
+}

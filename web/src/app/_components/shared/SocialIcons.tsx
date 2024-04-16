@@ -1,12 +1,11 @@
-import type { NextPage } from 'next';
-import SocialGithub from '@/components/svg/SocialGithub';
-import SocialInstagram from '@/components/svg/SocialInstagram';
-import SocialLinkedin from '@/components/svg/SocialLinkedin';
-import SocialStrava from '@/components/svg/SocialStrava';
-import SocialEmail from '@/components/svg/SocialEmail';
+import SocialGithub from "@/components/svg/SocialGithub";
+import SocialInstagram from "@/components/svg/SocialInstagram";
+import SocialLinkedin from "@/components/svg/SocialLinkedin";
+import SocialStrava from "@/components/svg/SocialStrava";
+import SocialEmail from "@/components/svg/SocialEmail";
 
-const SocialIcons: NextPage = () => {
-  const size = '30px';
+export default function SocialIcons() {
+  const size = "30px";
   return (
     <div className="social-icons">
       <div>
@@ -50,24 +49,6 @@ const SocialIcons: NextPage = () => {
           <SocialEmail size={size} />
         </a>
       </div>
-      <style jsx>{`
-        .social-icons {
-          display: flex;
-          line-height: ${size};
-          height: ${size};
-          overflow: hidden;
-        }
-
-        .social-icons > div {
-          margin: 0 10px 0 0;
-        }
-
-        .social-icons > div:last-child {
-          margin: 0;
-        }
-      `}</style>
     </div>
   );
-};
-
-export default SocialIcons;
+}
