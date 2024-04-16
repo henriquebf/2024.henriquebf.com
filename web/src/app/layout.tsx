@@ -3,12 +3,12 @@ import { Saira_Extra_Condensed, Saira } from "next/font/google";
 import "./globals.css";
 
 const saira = Saira({
-  weight: "400",
+  weight: ["400", "500"],
   subsets: ["latin"],
 });
 
 const sairaCondensed = Saira_Extra_Condensed({
-  weight: "400",
+  weight: ["400", "500"],
   subsets: ["latin"],
 });
 
