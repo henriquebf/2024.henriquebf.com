@@ -1,12 +1,6 @@
-import type { NextPage } from 'next';
-import React from 'react';
-import colors from '@/config/colors.json';
+import React from "react";
 
-type Props = {
-  size: string;
-};
-
-const Svg: NextPage<Props> = ({ size }) => {
+export default function Svg({ size }: { size: string }) {
   return (
     <>
       <svg x="0" y="0" width={size} height={size} viewBox="0, 0, 100, 100">
@@ -31,27 +25,6 @@ const Svg: NextPage<Props> = ({ size }) => {
           </g>
         </mask>
       </svg>
-      <style jsx>{`
-        circle {
-          fill: ${colors.light.text_primary_color};
-        }
-
-        circle:hover {
-          fill: ${colors.light.text_active_color};
-        }
-
-        @media (prefers-color-scheme: dark) {
-          circle {
-            fill: ${colors.dark.text_primary_color};
-          }
-
-          circle:hover {
-            fill: ${colors.dark.text_active_color};
-          }
-        }
-      `}</style>
     </>
   );
-};
-
-export default Svg;
+}

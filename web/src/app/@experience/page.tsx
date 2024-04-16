@@ -1,9 +1,5 @@
 "use client";
 
-import type { NextPage } from "next";
-import zIndexes from "@/config/zIndexes.json";
-import colors from "@/config/colors.json";
-import sizes from "@/config/sizes.json";
 import Container from "@/components/layout/Container";
 import ExperienceItem from "@/components/shared/ExperienceItem";
 
@@ -195,7 +191,7 @@ const experienceItems = [
   },
 ];
 
-const Experience: NextPage = () => {
+export default function Experience() {
   return (
     <section id="experience">
       <Container>
@@ -236,139 +232,6 @@ const Experience: NextPage = () => {
           })}
         </div>
       </Container>
-      <style jsx>{`
-        #experience {
-          position: relative;
-          z-index: ${zIndexes.section};
-          background-color: ${colors.light.bg_secondary_color};
-        }
-
-        .content {
-          padding: 20px 0 60px 0;
-          border-bottom: 1px solid ${colors.light.border_discreet_color};
-        }
-
-        @media (prefers-color-scheme: dark) {
-          #experience {
-            background-color: ${colors.dark.bg_secondary_color};
-          }
-
-          .content {
-            border-bottom: 1px solid ${colors.dark.border_discreet_color};
-          }
-        }
-
-        .experience-top {
-          display: none;
-        }
-
-        .wrapper {
-          display: grid;
-          grid-template-columns: 100%;
-        }
-
-        p {
-          font-size: 1.17em;
-          color: ${colors.light.text_secondary_color};
-        }
-
-        a,
-        b {
-          font-weight: 500;
-          color: ${colors.light.text_primary_color};
-        }
-
-        a:hover {
-          color: ${colors.light.border_highlight_color};
-        }
-
-        @media (prefers-color-scheme: dark) {
-          p {
-            color: ${colors.dark.text_secondary_color};
-          }
-
-          a,
-          b {
-            color: ${colors.dark.text_primary_color};
-          }
-
-          a:hover {
-            color: ${colors.dark.border_highlight_color};
-          }
-        }
-
-        .experience-center {
-          display: none;
-        }
-
-        .experience-dummy {
-          display: none;
-        }
-
-        @media (min-width: ${sizes.container}) {
-          .experience-top {
-            display: block;
-            width: 100px;
-            height: 1px;
-            margin: 0 auto;
-            background-color: ${colors.light.border_highlight_color};
-          }
-
-          .wrapper {
-            grid-template-columns: 50% 1px 50%;
-          }
-
-          .experience-center {
-            display: block;
-            position: relative;
-            max-width: 1200px;
-            margin: 0 auto;
-          }
-
-          .experience-center:after {
-            content: "";
-            position: absolute;
-            width: 1px;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -1px;
-          }
-
-          .experience-center.middle:after {
-            background-color: ${colors.light.border_highlight_color};
-          }
-
-          .experience-center.first,
-          .experience-center.last {
-            height: 60px;
-          }
-
-          .experience-center.first:after {
-            background-color: ${colors.light.border_highlight_color};
-          }
-
-          .experience-dummy {
-            display: block;
-          }
-
-          @media (prefers-color-scheme: dark) {
-            .experience-top {
-              background-color: ${colors.dark.border_highlight_color};
-            }
-
-            .experience-center.middle:after {
-              background-color: ${colors.dark.border_highlight_color};
-            }
-
-            .experience-center.first:after {
-              background-color: ${colors.dark.border_highlight_color};
-            }
-          }
-        }
-      `}</style>
     </section>
   );
-};
-
-export default Experience;
+}
