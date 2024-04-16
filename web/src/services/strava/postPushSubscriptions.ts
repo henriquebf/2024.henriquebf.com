@@ -1,7 +1,7 @@
-import axios from 'axios';
-import stravaSettings from '@/services/strava/settings.json';
+import axios from "axios";
+import stravaSettings from "./settings.json";
 
-export const verifyToken = 'fZOC25d2zR73mFRiYEmB';
+export const verifyToken = "fZOC25d2zR73mFRiYEmB";
 const envStravaSettings = stravaSettings[process.env.NODE_ENV];
 
 type Body = {
@@ -15,8 +15,8 @@ const postPushSubscriptions = async (): Promise<any> => {
   try {
     const body: Body = {
       client_id: envStravaSettings.clientId,
-      client_secret: process.env.STRAVA_CLIENT_SECRET || '',
-      callback_url: 'https://henriquebf.com/api/push',
+      client_secret: process.env.STRAVA_CLIENT_SECRET || "",
+      callback_url: "https://henriquebf.com/api/push",
       verify_token: verifyToken,
     };
 

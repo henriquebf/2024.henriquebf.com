@@ -1,8 +1,8 @@
-import SocialGithub from "@/components/svg/SocialGithub";
-import SocialInstagram from "@/components/svg/SocialInstagram";
-import SocialLinkedin from "@/components/svg/SocialLinkedin";
-import SocialStrava from "@/components/svg/SocialStrava";
-import SocialEmail from "@/components/svg/SocialEmail";
+import SocialGithub from "../svg/SocialGithub";
+import SocialInstagram from "../svg/SocialInstagram";
+import SocialLinkedin from "../svg/SocialLinkedin";
+import SocialStrava from "../svg/SocialStrava";
+import SocialEmail from "../svg/SocialEmail";
 
 export default function SocialIcons() {
   const size = "30px";

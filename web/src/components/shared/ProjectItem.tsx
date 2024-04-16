@@ -1,5 +1,5 @@
-import IconExternalLink from "@/components/svg/IconExternalLink";
-import IconGithub from "@/components/svg/IconGithub";
+import IconExternalLink from "../svg/IconExternalLink";
+import IconGithub from "../svg/IconGithub";
 
 type Item = {
   title: string;

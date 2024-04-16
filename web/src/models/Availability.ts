@@ -1,8 +1,8 @@
-import * as uuid from 'uuid';
-import { range } from 'lodash';
-import { find, findOne, updateMany, deleteMany } from '@/lib/db';
-import { getMonth } from '@/helpers/calendarHelper';
-import { getHours } from '@/helpers/calendarHelper';
+import * as uuid from "uuid";
+import { range } from "lodash";
+import { find, findOne, updateMany, deleteMany } from "../lib/db";
+import { getMonth } from "../helpers/calendarHelper";
+import { getHours } from "../helpers/calendarHelper";
 
 export interface AvailabilityRecord {
   id: string;
@@ -18,7 +18,7 @@ export interface AvailabilityMonth {
 }
 
 class Availability {
-  _collection: string = 'availabilities';
+  _collection: string = "availabilities";
 
   // Definitions
   _isNeverAvailable: boolean = false;
