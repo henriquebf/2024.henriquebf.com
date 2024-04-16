@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { classNames } from "@/helpers/utilsHelper";
+import { classNames } from "../../helpers/utilsHelper";
 
 type Link = {
   text: string;

@@ -1,5 +1,5 @@
-import axios from 'axios';
-import stravaSettings from '@/services/strava/settings.json';
+import axios from "axios";
+import stravaSettings from "./settings.json";
 
 const getPushSubscriptions = async (): Promise<any[]> => {
   try {

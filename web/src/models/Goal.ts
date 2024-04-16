@@ -1,5 +1,5 @@
-import * as uuid from 'uuid';
-import { find, findOne, updateMany, deleteMany } from '@/lib/db';
+import * as uuid from "uuid";
+import { find, findOne, updateMany, deleteMany } from "../lib/db";
 
 export interface GoalRecord {
   id: string;
@@ -10,7 +10,7 @@ export interface GoalRecord {
 }
 
 class Goal {
-  _collection: string = 'goals';
+  _collection: string = "goals";
 
   // Definitions
   _total: number = 10000000;

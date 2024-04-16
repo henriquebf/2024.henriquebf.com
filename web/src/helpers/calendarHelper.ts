@@ -1,27 +1,27 @@
-import { AvailabilityRecord } from '@/models/Availability';
+import { AvailabilityRecord } from "../models/Availability";
 
 export enum MonthNames {
-  jan = 'Jan',
-  feb = 'Feb',
-  mar = 'Mar',
-  apr = 'Apr',
-  may = 'May',
-  jun = 'Jun',
-  jul = 'Jul',
-  aug = 'Aug',
-  sep = 'Sep',
-  oct = 'Oct',
-  dec = 'Dec',
+  jan = "Jan",
+  feb = "Feb",
+  mar = "Mar",
+  apr = "Apr",
+  may = "May",
+  jun = "Jun",
+  jul = "Jul",
+  aug = "Aug",
+  sep = "Sep",
+  oct = "Oct",
+  dec = "Dec",
 }
 
 export enum WeekNames {
-  sun = 'Sun',
-  mon = 'Mon',
-  tue = 'Tue',
-  wed = 'Wed',
-  thu = 'Thu',
-  fri = 'Fri',
-  sat = 'Sat',
+  sun = "Sun",
+  mon = "Mon",
+  tue = "Tue",
+  wed = "Wed",
+  thu = "Thu",
+  fri = "Fri",
+  sat = "Sat",
 }
 
 const monthNames: string[] = Object.values(MonthNames);
@@ -99,8 +99,8 @@ export const getHours = (
     (a) => a.month === month && a.year === year
   );
   const unavailableDays = (
-    availability?.unavailableDays ? availability.unavailableDays : ''
-  ).split(',');
+    availability?.unavailableDays ? availability.unavailableDays : ""
+  ).split(",");
 
   // Adjust timezone offset
   const startDate = adjustTimezoneOffset(
@@ -112,7 +112,7 @@ export const getHours = (
   let hours = 0;
   for (const d = startDate; d <= endDate; d.setUTCDate(d.getUTCDate() + 1)) {
     if (
-      !unavailableDays.includes('all') &&
+      !unavailableDays.includes("all") &&
       !unavailableDays.includes(String(d.getUTCDate())) &&
       weekWorkingDays.includes(getWeekDay(d.getUTCDay()))
     ) {
