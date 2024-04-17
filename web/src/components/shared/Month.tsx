@@ -1,4 +1,4 @@
-import { classNames } from "../../helpers/utilsHelper";
+import { classNames } from "@/helpers/utilsHelper";
 
 export default function Month({
   name,
