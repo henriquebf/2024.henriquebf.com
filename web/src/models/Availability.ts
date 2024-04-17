@@ -28,7 +28,6 @@ class Availability {
     followingMonths: number
   ): Promise<AvailabilityMonth[]> {
     const months = range(followingMonths);
-    ``;
     const availabilities = await this.find({});
 
     return months
