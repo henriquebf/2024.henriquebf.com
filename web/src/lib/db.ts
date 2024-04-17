@@ -1,18 +1,14 @@
 // Ref: https://github.com/vercel/next.js/tree/canary/examples/with-mongodb
-import { MongoClient } from 'mongodb';
+import { MongoClient } from "mongodb";
 
-const dbName = 'v1';
-const uri = process.env.MONGODB_URI ?? '';
-const options: any = {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-};
+const dbName = "v1";
+const uri = process.env.MONGODB_URI ?? "";
 
 if (!process.env.MONGODB_URI) {
-  throw new Error('db: MONGODB_URI was not exported!');
+  throw new Error("db: MONGODB_URI was not exported!");
 }
 
-const clientObject = new MongoClient(uri, options);
+const clientObject = new MongoClient(uri);
 const clientPromise = clientObject.connect();
 
 interface AnyObject {
