@@ -1,5 +1,5 @@
 import Image from "next/image";
-import stravaSettings from "../../_services/strava/settings.json";
+import stravaSettings from "@/services/strava/settings.json";
 
 export default function ConnectWithStrava() {
   const envStravaSettings = stravaSettings[process.env.NODE_ENV];
