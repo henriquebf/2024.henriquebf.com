@@ -1,0 +1,7 @@
+.social {
+  fill: var(--text_primary_color);
+}
+
+.social:hover {
+  fill: var(--text_active_color);
+}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Saira } from "next/font/google";
+import "./global.css";
 
 const saira = Saira({
   weight: ["400", "500"],

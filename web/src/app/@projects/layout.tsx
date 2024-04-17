@@ -1,5 +1,6 @@
 import Container from "@/components/layout/Container";
 import ProjectItem from "@/components/shared/ProjectItem";
+import styles from "./layout.module.css";
 
 const projects = [
   {
@@ -17,17 +18,17 @@ const projects = [
 
 export default function Projects({ cycling }: { cycling: React.ReactNode }) {
   return (
-    <section id="projects">
+    <section id="projects" className={styles.projects}>
       <Container>
-        <div className="content">
+        <div className={styles.content}>
           <h2>Projects & Interest</h2>
-          <div className="wrapper">
-            <div className="projects">
+          <div className={styles.wrapper}>
+            <div className={styles.list}>
               {projects.map((item, i) => (
                 <ProjectItem key={i} item={item} />
               ))}
             </div>
-            <div className="goals">{cycling}</div>
+            <div>{cycling}</div>
           </div>
         </div>
       </Container>

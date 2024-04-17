@@ -1,0 +1,20 @@
+.availability {
+  position: relative;
+  z-index: var(--z_section);
+  background-color: var(--bg_secondary_color);
+  border-bottom: 1px solid var(--border_discreet_color);
+}
+
+.content {
+  padding: 20px 0;
+}
+
+.calendars {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.note {
+  color: var(--text_secondary_color);
+}

@@ -1,0 +1,7 @@
+.icon {
+  stroke: var(--text_primary_color);
+}
+
+.icon:hover {
+  stroke: var(--text_active_color);
+}

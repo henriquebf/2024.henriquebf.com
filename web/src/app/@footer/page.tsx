@@ -5,6 +5,7 @@ import Container from "@/components/layout/Container";
 import SocialIcons from "@/components/shared/SocialIcons";
 import IconCopyClipboard from "@/components/svg/IconCopyClipboard";
 import { classNames, sleep } from "@/helpers/utilsHelper";
+import styles from "./page.module.css";
 
 export default function Footer() {
   const emailAddress = "contact@henriquebf.com";
@@ -26,24 +27,27 @@ export default function Footer() {
   };
 
   return (
-    <section id="footer">
+    <section id="footer" className={styles.footer}>
       <Container>
-        <div className="wrapper">
-          <div className="email">
+        <div className={styles.wrapper}>
+          <div className={styles.email}>
             <a href={`mailto:${emailAddress}`}>{emailAddress}</a>
-            <div className="icon" onClick={copyToClipboard}>
+            <div className={styles.icon} onClick={copyToClipboard}>
               <IconCopyClipboard size="20px" />
             </div>
             {hasCopied && (
               <span
-                className={classNames(["copied", isFading ? "fading" : ""])}
+                className={classNames([
+                  styles.copied,
+                  isFading ? styles.fading : "",
+                ])}
               >
                 saved in clipboard
               </span>
             )}
           </div>
           <div>
-            <div className="social">
+            <div className={styles.social}>
               <SocialIcons />
             </div>
           </div>

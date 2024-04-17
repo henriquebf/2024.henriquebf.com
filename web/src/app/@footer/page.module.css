@@ -1,0 +1,50 @@
+.footer {
+  position: relative;
+  z-index: var(--z_section);
+  padding: 20px 0;
+  line-height: 30px;
+  color: var(--text_primary_color);
+}
+
+.email {
+  display: none;
+}
+
+.social {
+  width: 190px;
+  margin: 0 auto;
+}
+
+@media (min-width: 1200px) {
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+    grid-template-columns: 50% 50%;
+  }
+
+  .email {
+    display: block;
+    height: 30px;
+  }
+
+  .icon {
+    display: inline-block;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    margin-top: -4px;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+
+  .copied {
+    margin-left: 10px;
+    color: var(--text_secondary_color);
+    opacity: 1;
+    transition: opacity 1s;
+  }
+
+  .fading {
+    opacity: 0;
+  }
+}

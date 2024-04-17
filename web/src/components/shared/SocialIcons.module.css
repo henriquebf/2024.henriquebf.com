@@ -1,0 +1,14 @@
+.social_icons {
+  display: flex;
+  line-height: 30px;
+  height: 30px;
+  overflow: hidden;
+}
+
+.social_icons > div {
+  margin: 0 10px 0 0;
+}
+
+.social_icons > div:last-child {
+  margin: 0;
+}
