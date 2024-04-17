@@ -2,6 +2,8 @@
 
 import Container from "@/components/layout/Container";
 import ExperienceItem from "@/components/shared/ExperienceItem";
+import { classNames } from "@/helpers/utilsHelper";
+import styles from "./page.module.css";
 
 const experienceItems = [
   {
@@ -193,11 +195,11 @@ const experienceItems = [
 
 export default function Experience() {
   return (
-    <section id="experience">
+    <section id="experience" className={styles.experience}>
       <Container>
-        <div className="content">
+        <div className={styles.content}>
           <h2>Experience</h2>
-          <p>
+          <p className={styles.text}>
             As a versatile software engineer, I specialize in crafting top-notch
             products, focused on delivering exceptional user experience with
             optimal performance. My expertise spans across web, mobile, and
@@ -205,26 +207,38 @@ export default function Experience() {
             solutions. In addition to my technical prowess, I bring valuable
             experience in managing businesses and growing an engineering team.
           </p>
-          <div className="experience-top"></div>
-          <div className="wrapper">
-            <div className="experience-dummy" />
-            <div className="experience-center first" />
-            <div className="experience-dummy" />
+          <div className={styles.experience_top}></div>
+          <div className={styles.wrapper}>
+            <div className={styles.experience_dummy} />
+            <div
+              className={classNames([styles.experience_center, styles.first])}
+            />
+            <div className={styles.experience_dummy} />
           </div>
           {experienceItems.map((item, i) => {
             if (i % 2 === 0) {
               return (
-                <div key={i} className="wrapper">
+                <div key={i} className={styles.wrapper}>
                   <ExperienceItem item={item} direction="left" />
-                  <div className="experience-center middle" />
-                  <div className="experience-dummy" />
+                  <div
+                    className={classNames([
+                      styles.experience_center,
+                      styles.middle,
+                    ])}
+                  />
+                  <div className={styles.experience_dummy} />
                 </div>
               );
             } else {
               return (
-                <div key={i} className="wrapper">
-                  <div className="experience-dummy" />
-                  <div className="experience-center middle" />
+                <div key={i} className={styles.wrapper}>
+                  <div className={styles.experience_dummy} />
+                  <div
+                    className={classNames([
+                      styles.experience_center,
+                      styles.middle,
+                    ])}
+                  />
                   <ExperienceItem item={item} direction="right" />
                 </div>
               );

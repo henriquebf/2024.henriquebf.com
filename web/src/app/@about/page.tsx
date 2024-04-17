@@ -5,6 +5,7 @@ import { classNames } from "@/helpers/utilsHelper";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
 import Container from "@/components/layout/Container";
 import SocialIcons from "@/components/shared/SocialIcons";
+import styles from './page.module.css'
 
 export default function About() {
   const scrollPosition = useScrollPosition();
@@ -22,24 +23,24 @@ export default function About() {
   const _handleCaretClick = () => {};
 
   return (
-    <section id="about">
-      <div className={classNames(["content", showIntro ? "show" : "hide"])}>
+    <section id="about" className={styles.about}>
+      <div className={classNames([styles.content, showIntro ? styles.show : styles.hide])}>
         <Container>
-          <div className="wrapper">
-            <div className={classNames(["scale", showIntro ? "show" : "hide"])}>
-              <div className="avatar" />
-              <h1>
-                I am <b>Henrique Ferreira</b>
+          <div className={styles.wrapper}>
+            <div className={classNames([styles.scale, showIntro ? styles.show : styles.hide])}>
+              <div className={styles.avatar} />
+              <h1 className={styles.heading}>
+                I am <b className={styles.strong}>Henrique Ferreira</b>
               </h1>
-              <h3>
-                A <b>Road Cycling</b> enthusiast and <b>Fullstack Developer</b>{" "}
+              <h3 className={styles.heading}>
+                A <b className={styles.strong}>Road Cycling</b> enthusiast and <b className={styles.strong}>Fullstack Developer</b>{" "}
                 specialist on React based frameworks.
               </h3>
-              <h3>
+              <h3 className={styles.heading}>
                 20+ years experience building e-commerce and applications for
                 Web, Desktop, Mobile or anything you can write code for.
               </h3>
-              <div className="social-icons">
+              <div className={styles.social_icons}>
                 <SocialIcons />
               </div>
             </div>
@@ -47,7 +48,7 @@ export default function About() {
         </Container>
       </div>
       <div
-        className={classNames(["caret", showIntro ? "show" : "hide"])}
+        className={classNames([styles.caret, showIntro ? styles.show : styles.hide])}
         onClick={_handleCaretClick}
       />
     </section>

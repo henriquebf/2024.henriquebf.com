@@ -1,5 +1,6 @@
 import IconExternalLink from "../svg/IconExternalLink";
 import IconGithub from "../svg/IconGithub";
+import styles from "./ProjectItem.module.css";
 
 type Item = {
   title: string;
@@ -10,10 +11,10 @@ type Item = {
 
 export default function ProjectItem({ item }: { item: Item }) {
   return (
-    <div className="project-item">
+    <div>
       <h4>{item.title}</h4>
-      <p>{item.description}</p>
-      <div className="icons">
+      <p className={styles.text}>{item.description}</p>
+      <div className={styles.icons}>
         {item.github && (
           <div>
             <a href={item.github} target="_blank" rel="noreferrer">

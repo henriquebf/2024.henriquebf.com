@@ -1,0 +1,26 @@
+.projects {
+  position: relative;
+  z-index: var(--z_section);
+  background-color: var(--bg_secondary_color);
+}
+
+.content {
+  padding: 20px 0 40px 0;
+  border-bottom: 1px solid var(--border_discreet_color);
+}
+
+.wrapper,
+.list {
+  display: grid;
+  grid-template-columns: 100%;
+}
+
+@media (min-width: 1200px) {
+  .wrapper {
+    grid-template-columns: 66% 33%;
+  }
+
+  .list {
+    grid-template-columns: 50% 50%;
+  }
+}

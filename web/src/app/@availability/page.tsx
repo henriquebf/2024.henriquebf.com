@@ -1,16 +1,17 @@
 import Container from "@/components/layout/Container";
 import Month from "@/components/shared/Month";
 import { AvailabilityMonth } from "@/models/Availability";
+import styles from "./page.module.css";
 
 export default async function Availability() {
   const availabilityMonths: AvailabilityMonth[] = []; // FIXME!
 
   return (
-    <section id="availability">
+    <section id="availability" className={styles.availability}>
       <Container>
-        <div className="content">
+        <div className={styles.content}>
           <h2>Availability</h2>
-          <div className="calendars">
+          <div className={styles.calendars}>
             {availabilityMonths.map(({ name, year, availableHours }) => (
               <Month
                 key={name}
@@ -20,7 +21,7 @@ export default async function Availability() {
               />
             ))}
           </div>
-          <div className="note">
+          <div className={styles.note}>
             <p>
               This information is estimated and can be flexible. Please get in
               touch for specific dates and hourly rates.

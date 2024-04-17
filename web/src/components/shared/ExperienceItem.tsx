@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { classNames } from "@/helpers/utilsHelper";
+import styles from "./ExperienceItem.module.css";
 
 type Link = {
   text: string;
@@ -26,10 +27,12 @@ export default function ExperienceItem({
   direction: "left" | "right";
   item: Item;
 }) {
+  const className = direction === "left" ? styles.left : styles.right;
+
   return (
-    <div className="experience-item">
+    <div>
       {item.thumb && (
-        <div className={classNames(["thumb", direction])}>
+        <div className={classNames([styles.thumb, className])}>
           <Image
             src={`/${item.thumb}`}
             alt={item.title}
@@ -38,32 +41,34 @@ export default function ExperienceItem({
           />
         </div>
       )}
-      <div className={classNames(["title", direction])}>
-        <h3>{item.title}</h3>
+      <div className={classNames([styles.title, className])}>
+        <h3 className={styles.heading}>{item.title}</h3>
       </div>
-      <div className={classNames(["position", direction])}>{item.position}</div>
-      <div className={classNames(["time", direction])}>
+      <div className={classNames([styles.position, className])}>
+        {item.position}
+      </div>
+      <div className={classNames([styles.time, className])}>
         {item.time} ({item.duration})
       </div>
       {item.description.map((paragraph, i) => (
-        <div key={i} className={classNames(["description", direction])}>
+        <div key={i} className={classNames([styles.description, className])}>
           {paragraph}
         </div>
       ))}
 
       {item.link && (
-        <div className={classNames(["link", direction])}>
+        <div className={classNames([styles.link, className])}>
           <a href={item.link.url} rel="noreferrer" target="_blank">
             {item.link.text}
           </a>
         </div>
       )}
-      <ul className={classNames(["bullets", direction])}>
+      <ul className={classNames([styles.bullets, className])}>
         {item.bullets.map((item, i) => (
           <li key={i}>{item}</li>
         ))}
       </ul>
-      <div className={classNames(["line", direction])}></div>
+      <div className={classNames([styles.line, className])}></div>
     </div>
   );
 }

@@ -3,11 +3,12 @@ import SocialInstagram from "../svg/SocialInstagram";
 import SocialLinkedin from "../svg/SocialLinkedin";
 import SocialStrava from "../svg/SocialStrava";
 import SocialEmail from "../svg/SocialEmail";
+import styles from "./SocialIcons.module.css";
 
 export default function SocialIcons() {
   const size = "30px";
   return (
-    <div className="social-icons">
+    <div className={styles.social_icons}>
       <div>
         <a
           href="https://github.com/henriquebf/"
