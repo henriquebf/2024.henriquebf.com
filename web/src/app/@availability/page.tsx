@@ -1,10 +1,12 @@
+"use server";
+
 import Container from "@/components/layout/Container";
 import Month from "@/components/shared/Month";
-import { AvailabilityMonth } from "@/models/Availability";
+import Availability from "@/models/Availability";
 import styles from "./page.module.css";
 
-export default async function Availability() {
-  const availabilityMonths: AvailabilityMonth[] = []; // FIXME!
+export default async function AvailabilitySection() {
+  const availabilityMonths = await Availability.findAvailableMonths(6);
 
   return (
     <section id="availability" className={styles.availability}>

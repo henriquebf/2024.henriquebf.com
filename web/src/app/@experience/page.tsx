@@ -193,7 +193,7 @@ const experienceItems = [
   },
 ];
 
-export default function Experience() {
+export default function ExperienceSection() {
   return (
     <section id="experience" className={styles.experience}>
       <Container>

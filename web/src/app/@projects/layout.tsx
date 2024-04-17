@@ -16,7 +16,11 @@ const projects = [
   },
 ];
 
-export default function Projects({ cycling }: { cycling: React.ReactNode }) {
+export default function ProjectsSection({
+  cycling,
+}: {
+  cycling: React.ReactNode;
+}) {
   return (
     <section id="projects" className={styles.projects}>
       <Container>

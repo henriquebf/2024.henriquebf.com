@@ -1,9 +1,17 @@
+"use server";
+
 import { getSchedule } from "@/helpers/cyclingHelper";
-import { GoalRecord } from "@/models/Goal";
+import Goal from "@/models/Goal";
 import styles from "./page.module.css";
 
-export default function Cycling({ goal }: { goal: GoalRecord | null }) {
-  if (!goal) return null; // FIXME!
+export default async function Cycling() {
+  const goal = await Goal.findOne({
+    athleteId: Number(process.env.STRAVA_ADMIN_ID),
+  });
+
+  if (!goal) {
+    throw new Error("Cycling: Goal not found!");
+  }
 
   const { total, distance } = goal;
   const progress = (Math.ceil(distance * 100) / total).toFixed(1);
