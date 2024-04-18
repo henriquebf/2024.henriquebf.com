@@ -7,9 +7,7 @@ export default function Admin() {
   return (
     <Container>
       <Header />
-      <main>
-        <ConnectWithStrava />
-      </main>
+      <ConnectWithStrava />
       <Footer />
     </Container>
   );
