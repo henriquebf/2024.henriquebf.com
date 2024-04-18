@@ -1,6 +1,6 @@
 .footer {
   position: relative;
-  z-index: var(--z_section);
+  z-index: var(--z_header);
   padding: 20px 0;
   line-height: 30px;
   color: var(--text_primary_color);

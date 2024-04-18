@@ -29,31 +29,14 @@ export const metadata: Metadata = {
   icons,
 };
 
-export default function Home({
-  header,
-  about,
-  projects,
-  experience,
-  availability,
-  footer,
+export default function HomeLayout({
+  children,
 }: {
-  header: React.ReactNode;
-  about: React.ReactNode;
-  projects: React.ReactNode;
-  experience: React.ReactNode;
-  availability: React.ReactNode;
-  footer: React.ReactNode;
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
-      <body className={saira.className}>
-        {header}
-        {about}
-        {projects}
-        {experience}
-        {availability}
-        {footer}
-      </body>
+      <body className={saira.className}>{children}</body>
     </html>
   );
 }

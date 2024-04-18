@@ -5,7 +5,7 @@ import Container from "@/components/layout/Container";
 import SocialIcons from "@/components/shared/SocialIcons";
 import IconCopyClipboard from "@/components/svg/IconCopyClipboard";
 import { classNames, sleep } from "@/helpers/utilsHelper";
-import styles from "./page.module.css";
+import styles from "./footer.module.css";
 
 export default function Footer() {
   const emailAddress = "contact@henriquebf.com";
@@ -27,7 +27,7 @@ export default function Footer() {
   };
 
   return (
-    <section id="footer" className={styles.footer}>
+    <footer id="footer" className={styles.footer}>
       <Container>
         <div className={styles.wrapper}>
           <div className={styles.email}>
@@ -53,6 +53,6 @@ export default function Footer() {
           </div>
         </div>
       </Container>
-    </section>
+    </footer>
   );
 }

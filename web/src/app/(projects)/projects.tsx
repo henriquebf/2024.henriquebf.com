@@ -1,6 +1,7 @@
 import Container from "@/components/layout/Container";
 import ProjectItem from "@/components/shared/ProjectItem";
-import styles from "./layout.module.css";
+import Cycling from "./(cycling)/cycling";
+import styles from "./projects.module.css";
 
 const projects = [
   {
@@ -16,11 +17,7 @@ const projects = [
   },
 ];
 
-export default function ProjectsSection({
-  cycling,
-}: {
-  cycling: React.ReactNode;
-}) {
+export default function ProjectsSection() {
   return (
     <section id="projects" className={styles.projects}>
       <Container>
@@ -32,7 +29,7 @@ export default function ProjectsSection({
                 <ProjectItem key={i} item={item} />
               ))}
             </div>
-            <div>{cycling}</div>
+            <Cycling />
           </div>
         </div>
       </Container>

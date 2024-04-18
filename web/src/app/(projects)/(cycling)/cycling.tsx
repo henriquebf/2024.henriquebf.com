@@ -2,7 +2,7 @@
 
 import { getSchedule } from "@/helpers/cyclingHelper";
 import Goal from "@/models/Goal";
-import styles from "./page.module.css";
+import styles from "./cycling.module.css";
 
 export default async function Cycling() {
   const goal = await Goal.findOne({

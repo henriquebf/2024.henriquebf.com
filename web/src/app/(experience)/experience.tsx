@@ -3,7 +3,7 @@
 import Container from "@/components/layout/Container";
 import ExperienceItem from "@/components/shared/ExperienceItem";
 import { classNames } from "@/helpers/utilsHelper";
-import styles from "./page.module.css";
+import styles from "./experience.module.css";
 
 const experienceItems = [
   {
