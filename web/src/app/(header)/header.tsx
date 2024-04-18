@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { classNames } from "@/helpers/utilsHelper";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
 import Container from "@/components/layout/Container";
-import styles from "./page.module.css";
+import styles from "./header.module.css";
 
 export default function Header() {
   const scrollPosition = useScrollPosition();

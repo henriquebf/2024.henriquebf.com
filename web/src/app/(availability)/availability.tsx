@@ -3,7 +3,7 @@
 import Container from "@/components/layout/Container";
 import Month from "@/components/shared/Month";
 import Availability from "@/models/Availability";
-import styles from "./page.module.css";
+import styles from "./availability.module.css";
 
 export default async function AvailabilitySection() {
   const availabilityMonths = await Availability.findAvailableMonths(6);
