@@ -6,5 +6,5 @@ export async function GET() {
   const session = await getSession();
   // Destroy session and return to Index page
   session.destroy();
-  redirect("/admin");
+  Response.redirect("/admin");
 }
