@@ -5,7 +5,6 @@ import getAthlete from "@/services/strava/getAthlete";
 import getAthleteStats from "@/services/strava/getAthleteStats";
 import postPushSubscriptions from "@/services/strava/postPushSubscriptions";
 import getPushSubscriptions from "@/services/strava/getPushSubscriptions";
-import { redirect } from "next/navigation";
 import { getSession } from "@/lib/session";
 
 export async function GET(req: NextRequest) {
@@ -27,7 +26,7 @@ export async function GET(req: NextRequest) {
 
     // Check if strava user has admin credentials
     if (process.env.STRAVA_ADMIN_ID !== String(data.athlete.id)) {
-      redirect("/admin");
+      Response.redirect("/admin", 302);
     }
 
     // Update Goal data
@@ -56,10 +55,10 @@ export async function GET(req: NextRequest) {
       }
     }
 
-    redirect("/admin/edit");
+    Response.redirect("/admin/edit");
   } catch (err) {
     console.error(err);
     session.destroy();
-    redirect("/admin");
+    Response.redirect("/admin");
   }
 }
