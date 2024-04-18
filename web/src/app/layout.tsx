@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Saira } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./global.css";
 
 const saira = Saira({
@@ -36,7 +37,10 @@ export default function HomeLayout({
 }) {
   return (
     <html lang="en">
-      <body className={saira.className}>{children}</body>
+      <body className={saira.className}>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
