@@ -9,7 +9,7 @@ export default async function Edit() {
   const athleteId = session.athleteId;
 
   if (athleteId !== process.env.STRAVA_ADMIN_ID) {
-    Response.redirect("/admin", 302);
+    Response.redirect("https://henriquebf.com/admin", 302);
   }
 
   const currentYear = new Date().getFullYear();
