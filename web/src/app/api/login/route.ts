@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
 
     // Check if strava user has admin credentials
     if (process.env.STRAVA_ADMIN_ID !== String(data.athlete.id)) {
-      Response.redirect(new URL("/admin", req.url), 302);
+      return Response.redirect(new URL("/admin", req.url), 302);
     }
 
     // Update Goal data
@@ -55,10 +55,10 @@ export async function GET(req: NextRequest) {
       }
     }
 
-    Response.redirect(new URL("/admin/edit", req.url));
+    return Response.redirect(new URL("/admin/edit", req.url));
   } catch (err) {
     console.error(err);
     session.destroy();
-    Response.redirect(new URL("/admin", req.url));
+    return Response.redirect(new URL("/admin", req.url));
   }
 }

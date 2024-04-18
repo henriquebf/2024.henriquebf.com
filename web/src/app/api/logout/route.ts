@@ -5,5 +5,5 @@ export async function GET(req: NextRequest) {
   const session = await getSession();
   // Destroy session and return to Index page
   session.destroy();
-  Response.redirect(new URL("/admin", req.url));
+  return Response.redirect(new URL("/admin", req.url));
 }
