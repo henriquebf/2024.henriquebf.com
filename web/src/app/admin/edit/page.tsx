@@ -17,44 +17,42 @@ export default async function Edit() {
   const availabilities = await Availability.find({});
 
   return (
-    <main>
-      <Container>
-        <h1>Settings</h1>
-        <h2>Goal in {currentYear}</h2>
-        {goal && (
-          <table>
-            <tr>
-              <td>
-                <b>Total:</b>
-              </td>
-              <td>{goal.total} m</td>
-            </tr>
-            <tr>
-              <td>
-                <b>Distance:</b>
-              </td>
-              <td>{goal.distance} m</td>
-            </tr>
-          </table>
-        )}
-        <h2>Availability</h2>
+    <Container>
+      <h1>Settings</h1>
+      <h2>Goal in {currentYear}</h2>
+      {goal && (
         <table>
-          {availabilities.map((a, index) => (
-            <tr key={index}>
-              <td>
-                <b>
-                  {a.year}.{a.month}
-                </b>
-              </td>
-              <td>{a.unavailableDays}</td>
-            </tr>
-          ))}
+          <tr>
+            <td>
+              <b>Total:</b>
+            </td>
+            <td>{goal.total} m</td>
+          </tr>
+          <tr>
+            <td>
+              <b>Distance:</b>
+            </td>
+            <td>{goal.distance} m</td>
+          </tr>
         </table>
-        <h3>Actions</h3>
-        <footer>
-          <Link href={`/api/logout`}>logout</Link>
-        </footer>
-      </Container>
-    </main>
+      )}
+      <h2>Availability</h2>
+      <table>
+        {availabilities.map((a, index) => (
+          <tr key={index}>
+            <td>
+              <b>
+                {a.year}.{a.month}
+              </b>
+            </td>
+            <td>{a.unavailableDays}</td>
+          </tr>
+        ))}
+      </table>
+      <h3>Actions</h3>
+      <footer>
+        <Link href={`/api/logout`}>logout</Link>
+      </footer>
+    </Container>
   );
 }
