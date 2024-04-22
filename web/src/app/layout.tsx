@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Saira } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./global.css";
@@ -40,6 +41,7 @@ export default function HomeLayout({
     <html lang="en">
       <body className={saira.className}>
         {children}
+        <GoogleAnalytics gaId="G-W6B25YJRXM" />
         <Analytics />
         <SpeedInsights />
       </body>
