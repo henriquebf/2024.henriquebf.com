@@ -50,9 +50,9 @@ export default async function Edit() {
         ))}
       </table>
       <h3>Actions</h3>
-      <footer>
+      <nav>
         <Link href={`/api/logout`}>logout</Link>
-      </footer>
+      </nav>
     </Container>
   );
 }
