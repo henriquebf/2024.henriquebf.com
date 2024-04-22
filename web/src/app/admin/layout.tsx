@@ -20,9 +20,5 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body className={saira.className}>{children}</body>
-    </html>
-  );
+  return children;
 }
