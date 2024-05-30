@@ -1,5 +1,3 @@
-"use server";
-
 import Container from "@/components/layout/Container";
 import Month from "@/components/shared/Month";
 import Availability from "@/models/Availability";

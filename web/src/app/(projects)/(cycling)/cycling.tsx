@@ -1,5 +1,3 @@
-"use server";
-
 import { getSchedule } from "@/helpers/cyclingHelper";
 import Goal from "@/models/Goal";
 import styles from "./cycling.module.css";
