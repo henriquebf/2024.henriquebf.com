@@ -13,7 +13,9 @@ export default async function Edit() {
   }
 
   const currentYear = new Date().getFullYear();
-  const goal = await Goal.findOne({ athleteId: Number(athleteId) });
+  const goal = await Goal.findOne({
+    athleteId: Number(process.env.STRAVA_ADMIN_ID),
+  });
   const availabilities = await Availability.find({});
 
   return (
