@@ -22,7 +22,8 @@ export default async function Cycling() {
     <div className="project-item">
       <h4>Cycling Goal for {currentYear}</h4>
       <p className={styles.text}>
-        I have completed <b>{Math.ceil(distance / 1000)} km</b> of my{" "}
+        I have completed{" "}
+        <b className={styles.strong}>{Math.ceil(distance / 1000)} km</b> of my{" "}
         <b className={styles.strong}>{Math.ceil(total / 1000)} km</b> yearly
         goal. This is a total progress of{" "}
         <b className={styles.strong}>{progress}%</b> and it is{" "}
