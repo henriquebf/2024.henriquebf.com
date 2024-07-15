@@ -1,10 +1,10 @@
 # henriquebf.com (2024)
 
-![image](https://github.com/henriquebf/2024.henriquebf.com/assets/1222058/56e46ffe-0c3f-48fc-ac45-b09bc83b9da4)
+![image](https://github.com/user-attachments/assets/280e231c-9a0e-4488-957b-ab3c514eb0bd)
 
 ## Personal Portfolio
 
-This project upgrades the legacy 2022 portfolio page to make benefits of new react/next.js features:
+This project upgrades the [legacy 2022 portfolio page](https://github.com/henriquebf/2022.henriquebf.com) to make benefits of new react/next.js features:
 
 - Server Components
 - Parallel Routing
