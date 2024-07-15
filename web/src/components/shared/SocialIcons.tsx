@@ -20,7 +20,7 @@ export default function SocialIcons() {
       </div>
       <div>
         <a
-          href="https://www.linkedin.com/in/henrique-ferreira-21985b1b/"
+          href="https://www.linkedin.com/in/henrique-bf"
           rel="noreferrer"
           target="_blank"
         >
