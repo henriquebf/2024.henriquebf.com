@@ -46,7 +46,11 @@ export default function SocialIcons() {
         </a>
       </div>
       <div>
-        <a href="mailto:henriquebf@gmail.com" rel="noreferrer" target="_blank">
+        <a
+          href="mailto:contact@henriquebf.com"
+          rel="noreferrer"
+          target="_blank"
+        >
           <SocialEmail size={size} />
         </a>
       </div>
