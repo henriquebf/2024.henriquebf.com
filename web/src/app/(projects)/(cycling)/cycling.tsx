@@ -2,6 +2,8 @@ import { getSchedule } from "@/helpers/cyclingHelper";
 import Goal from "@/models/Goal";
 import styles from "./cycling.module.css";
 
+export const revalidate = 1000 * 60 * 60 * 12; // Revalidate this route caching in 12 hours
+
 export default async function Cycling() {
   const goal = await Goal.findOne({
     athleteId: Number(process.env.STRAVA_ADMIN_ID),
