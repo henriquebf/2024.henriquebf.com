@@ -1,6 +1,5 @@
 import Container from "@/components/layout/Container";
 import { getSession } from "@/lib/session";
-import Availability from "@/models/Availability";
 import Goal from "@/models/Goal";
 import Link from "next/link";
 
@@ -16,7 +15,6 @@ export default async function Edit() {
   const goal = await Goal.findOne({
     athleteId: Number(process.env.STRAVA_ADMIN_ID),
   });
-  const availabilities = await Availability.find({});
 
   return (
     <Container>
@@ -38,19 +36,6 @@ export default async function Edit() {
           </tr>
         </table>
       )}
-      <h2>Availability</h2>
-      <table>
-        {availabilities.map((a, index) => (
-          <tr key={index}>
-            <td>
-              <b>
-                {a.year}.{a.month}
-              </b>
-            </td>
-            <td>{a.unavailableDays}</td>
-          </tr>
-        ))}
-      </table>
       <h3>Actions</h3>
       <nav>
         <Link href={`/api/logout`}>logout</Link>

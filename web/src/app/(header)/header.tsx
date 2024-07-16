@@ -49,8 +49,8 @@ export default function Header() {
             Experience
           </a>
           <div> &middot; </div>
-          <a href="#availability" className={styles.link} onClick={hideHeader}>
-            Availability
+          <a href="#services" className={styles.link} onClick={hideHeader}>
+            Services
           </a>
         </nav>
       </Container>

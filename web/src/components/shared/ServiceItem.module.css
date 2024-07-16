@@ -1,0 +1,8 @@
+.title {
+  color: var(--text_primary_color);
+  margin-bottom: 0;
+}
+
+.description {
+  color: var(--text_primary_color);
+}

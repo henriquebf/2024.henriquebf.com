@@ -9,9 +9,9 @@
   --text_active_color: rgba(64, 253, 220, 1);
   --border_discreet_color: rgba(32, 56, 82, 1);
   --border_highlight_color: rgba(64, 253, 220, 1);
+  --accent_color: rgba(242, 169, 59, 1);
   --progress_complete: rgba(64, 253, 220, 0.5);
   --progress_remaining: rgba(32, 56, 82, 1);
-  --availability_warning: rgba(242, 169, 59, 1);
   /* z-index */
   --z_header: 1001;
   --z_section: 1000;

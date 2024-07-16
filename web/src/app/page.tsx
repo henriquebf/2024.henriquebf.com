@@ -1,6 +1,6 @@
 import Footer from "./(footer)/footer";
 import AboutSection from "./(about)/about";
-import AvailabilitySection from "./(availability)/availability";
+import ServicesSection from "./(services)/services";
 import ExperienceSection from "./(experience)/experience";
 import ProjectsSection from "./(projects)/projects";
 import Header from "./(header)/header";
@@ -13,7 +13,7 @@ export default function Home() {
         <AboutSection />
         <ProjectsSection />
         <ExperienceSection />
-        <AvailabilitySection />
+        <ServicesSection />
       </main>
       <Footer />
     </>
