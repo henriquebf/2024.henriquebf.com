@@ -16,7 +16,7 @@ const serviceItems = [
   {
     title: "Programming",
     description:
-      "Add an experienced hand to your engineering and design team to get work done with the highest quality standards.",
+      "Add an experienced hand to your engineering and design teams to get work done with the highest quality standards.",
   },
   {
     title: "Consulting",
