@@ -1,0 +1,25 @@
+.services {
+  background-color: var(--bg_secondary_color);
+  border-bottom: 1px solid var(--border_discreet_color);
+}
+
+.content {
+  padding: 20px 0;
+}
+
+.serviceList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 5px;
+}
+
+.note {
+  color: var(--text_secondary_color);
+}
+
+@media (min-width: 1200px) {
+  .serviceList {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+  }
+}
