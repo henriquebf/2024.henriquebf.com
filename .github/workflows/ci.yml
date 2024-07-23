@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - "**"
-  pull_request:
-    branches:
-      - "**"
 
 env:
   STRAVA_ADMIN_ID: ${{ secrets.STRAVA_ADMIN_ID }}
