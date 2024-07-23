@@ -8,6 +8,12 @@ on:
     branches:
       - "**"
 
+env:
+  STRAVA_ADMIN_ID: ${{ secrets.STRAVA_ADMIN_ID }}
+  STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
+  MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+
 jobs:
   e2e:
     runs-on: ubuntu-latest
