@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test:e2e": "next build && next start & cypress run && pkill -f 'next start'"
   },
   "dependencies": {
     "@vercel/analytics": "^1.2.2",
