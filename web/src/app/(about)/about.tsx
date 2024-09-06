@@ -43,13 +43,14 @@ export default function AboutSection() {
                 I am <b className={styles.strong}>Henrique Ferreira</b>
               </h1>
               <h3 className={styles.heading}>
-                A <b className={styles.strong}>Road Cycling</b> enthusiast and{" "}
-                <b className={styles.strong}>Fullstack Developer</b> specialist
-                on React based frameworks.
+                A <b className={styles.strong}>road cycling</b> enthusiast and{" "}
+                <b className={styles.strong}>fullstack developer</b> who
+                delivers digital products with the highest standards.
               </h3>
               <h3 className={styles.heading}>
-                20+ years experience building e-commerce and applications for
-                Web, Desktop, Mobile or anything you can write code for.
+                Over 20 years of experience shipping{" "}
+                <b className={styles.strong}>digital products</b> for web,{" "}
+                desktop and mobile platforms.
               </h3>
               <div className={styles.social_icons}>
                 <SocialIcons />
