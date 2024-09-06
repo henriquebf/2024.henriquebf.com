@@ -200,12 +200,12 @@ export default function ExperienceSection() {
         <div className={styles.content}>
           <h2>Experience</h2>
           <p className={styles.text}>
-            As a versatile software engineer, I specialize in crafting top-notch
-            products, focused on delivering exceptional user experience with
-            optimal performance. My expertise spans across web, mobile, and
-            desktop platforms, enabling me to develop world-class software
-            solutions. In addition to my technical prowess, I bring valuable
-            experience in managing businesses and growing an engineering team.
+            As a versatile software engineer, I specialize in creating
+            high-quality products that prioritize exceptional user experiences
+            and optimal performance. My expertise spans web, mobile, and desktop
+            platforms, allowing me to develop world-class software solutions.
+            Alongside my technical skills, I bring valuable experience in
+            business management and leading the growth of engineering teams.
           </p>
           <div className={styles.experience_top}></div>
           <div className={styles.wrapper}>
