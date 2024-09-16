@@ -44,13 +44,10 @@ export default function AboutSection() {
               </h1>
               <h3 className={styles.heading}>
                 A <b className={styles.strong}>road cycling</b> enthusiast and{" "}
-                <b className={styles.strong}>fullstack developer</b> who
-                delivers digital products with the highest standards.
-              </h3>
-              <h3 className={styles.heading}>
-                Over 20 years of experience shipping{" "}
+                <b className={styles.strong}>fullstack developer</b> with over
+                20 years of experience shipping{" "}
                 <b className={styles.strong}>digital products</b> for web,{" "}
-                desktop and mobile platforms.
+                desktop and mobile platforms with highest standards.
               </h3>
               <div className={styles.social_icons}>
                 <SocialIcons />
