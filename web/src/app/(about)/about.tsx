@@ -18,9 +18,7 @@ export default function AboutSection() {
     } else {
       setShowIntro(true);
     }
-  }, [scrollPosition, setShowIntro]);
-
-  const _handleCaretClick = () => {};
+  }, [scrollPosition]);
 
   return (
     <section id="about" className={styles.about}>
@@ -44,8 +42,8 @@ export default function AboutSection() {
               </h1>
               <h3 className={styles.heading}>
                 A <b className={styles.strong}>road cycling</b> enthusiast and{" "}
-                <b className={styles.strong}>fullstack developer</b> with over
-                20 years of experience shipping{" "}
+                <b className={styles.strong}>product engineer</b> with over 20
+                years of experience shipping{" "}
                 <b className={styles.strong}>digital products</b> for web,{" "}
                 desktop and mobile platforms with highest standards.
               </h3>
@@ -56,13 +54,6 @@ export default function AboutSection() {
           </div>
         </Container>
       </div>
-      <div
-        className={classNames([
-          styles.caret,
-          showIntro ? styles.show : styles.hide,
-        ])}
-        onClick={_handleCaretClick}
-      />
     </section>
   );
 }
