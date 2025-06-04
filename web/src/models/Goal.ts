@@ -10,10 +10,10 @@ export interface GoalRecord {
 }
 
 class Goal {
-  _collection: string = "goals";
+  _collection = "goals";
 
   // Definitions
-  _total: number = 10000000;
+  _total = 10000000;
 
   // DB Transactions
   async find(filter: Partial<GoalRecord>): Promise<GoalRecord[]> {
@@ -46,4 +46,6 @@ class Goal {
   }
 }
 
-export default new Goal();
+const goal = new Goal();
+
+export default goal;
