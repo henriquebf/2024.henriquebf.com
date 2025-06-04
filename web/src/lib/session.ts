@@ -19,6 +19,6 @@ export interface Session {
   athleteId?: string;
 }
 
-export function getSession() {
-  return getIronSession(cookies(), sessionOptions);
+export async function getSession() {
+  return getIronSession(await cookies(), sessionOptions);
 }
