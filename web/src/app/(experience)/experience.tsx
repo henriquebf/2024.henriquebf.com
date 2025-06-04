@@ -92,7 +92,7 @@ const experienceItems = [
     thumb: "experience-thumb-pillar.svg",
     link: {
       text: `Visit Pillar website`,
-      url: `https://pillarstudio.com`,
+      url: `https://pillarstudio.co`,
     },
   },
   {
