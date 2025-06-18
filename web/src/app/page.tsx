@@ -5,6 +5,8 @@ import ExperienceSection from "./(experience)/experience";
 import ProjectsSection from "./(projects)/projects";
 import Header from "./(header)/header";
 
+export const revalidate = 3600; // Revalidate every hour
+
 export default function Home() {
   return (
     <>
