@@ -11,7 +11,7 @@ const experienceItems = [
     duration: `Current position`,
     title: `Neat Software B.V.`,
     location: `The Randstad, The Netherlands`,
-    position: `Founder & Product Maker`,
+    position: `Product Engineer & Founder`,
     description: [
       `Neat was founded in June 2024 with the goal to collaborate in projects that require a generalist software engineering profile, in order to ship products in a short time period, delivering code quality for maintenance and reliability.`,
       `Lovemail is a native iOS app originated from the acquisition of Tempo, a startup I previously co-founded in 2020. I have contributed writing a complete email engine in Swift, as well the HTML renderer and parser, and other minor integrations. I have also conducted the security assessment necessary to guarantee the api usage.`,
