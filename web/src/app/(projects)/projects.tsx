@@ -11,6 +11,11 @@ const projects = [
     link: `https://gearalert.henriquebf.com`,
   },
   {
+    title: `AI Translation Workflow`,
+    description: `Github workflow that automatically translates i18n files after commiting changes in the source language file.`,
+    github: `https://github.com/henriquebf/ai-translation-workflow`,
+  },
+  {
     title: `XR Playground`,
     description: `I have experimented with Unity 3D framework, learning the fundamentals of VR interactions using Oculus Quest 2 device.`,
     github: `https://github.com/henriquebf/xr-playground`,
