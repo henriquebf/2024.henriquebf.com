@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "test:e2e": "next build && next start & cypress run && pkill -f 'next start'"
@@ -24,6 +24,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.3",
     "@types/lodash": "^4.17.0",
     "@types/node": "^20",
     "@types/react": "^18",

@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { classNames } from "@/helpers/utilsHelper";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
 import Container from "@/components/layout/Container";
@@ -9,16 +8,7 @@ import styles from "./about.module.css";
 
 export default function AboutSection() {
   const scrollPosition = useScrollPosition();
-
-  const [showIntro, setShowIntro] = useState(true);
-
-  useEffect(() => {
-    if (scrollPosition > 150) {
-      setShowIntro(false);
-    } else {
-      setShowIntro(true);
-    }
-  }, [scrollPosition]);
+  const showIntro = scrollPosition <= 150;
 
   return (
     <section id="about" className={styles.about}>

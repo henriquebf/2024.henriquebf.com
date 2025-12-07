@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { classNames } from "@/helpers/utilsHelper";
 import { useScrollPosition } from "@/hooks/useScrollPosition";
 import Container from "@/components/layout/Container";
@@ -8,23 +8,17 @@ import styles from "./header.module.css";
 
 export default function Header() {
   const scrollPosition = useScrollPosition();
+  const [hideHeaderOverride, setHideHeaderOverride] = useState(false);
 
-  const [showHeader, setShowHeader] = useState(false);
-
-  useEffect(() => {
-    if (scrollPosition > 150) {
-      setShowHeader(true);
-    } else {
-      setShowHeader(false);
-    }
-  }, [scrollPosition, setShowHeader]);
+  const showHeader = scrollPosition > 150 && !hideHeaderOverride;
 
   const hideHeader = (e: any) => {
     e.preventDefault();
     const target = e.target.href?.split("#")[1] ?? "";
     const element = document.getElementById(target);
     element?.scrollIntoView();
-    setTimeout(() => setShowHeader(false), 50);
+    setHideHeaderOverride(true);
+    setTimeout(() => setHideHeaderOverride(false), 50);
   };
 
   return (
