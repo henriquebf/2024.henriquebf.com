@@ -2,13 +2,14 @@ import Container from "@/components/layout/Container";
 import { getSession } from "@/lib/session";
 import Goal from "@/models/Goal";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function Edit() {
   const session: any = await getSession();
   const athleteId = session.athleteId;
 
   if (athleteId !== process.env.STRAVA_ADMIN_ID) {
-    return Response.redirect("https://henriquebf.com/admin", 302);
+    redirect("https://henriquebf.com/admin");
   }
 
   const currentYear = new Date().getFullYear();
