@@ -34,7 +34,7 @@ export default function AboutSection() {
               </h1>
               <h3 className={styles.heading}>
                 A <b className={styles.strong}>road cycling</b> enthusiast and{" "}
-                <b className={styles.strong}>product engineer</b> with over 20
+                <b className={styles.strong}>product engineer</b> with over 25
                 years of experience shipping{" "}
                 <b className={styles.strong}>digital products</b> for web,{" "}
                 desktop and mobile platforms with highest standards.
