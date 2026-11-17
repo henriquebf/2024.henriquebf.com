@@ -5,6 +5,91 @@ import Container from "@/components/layout/Container";
 import SocialIcons from "@/components/shared/SocialIcons";
 import styles from "./about.module.css";
 
+type Segment = { text: string; strong?: boolean };
+
+const NAME: Segment[] = [
+  { text: "I'm " },
+  { text: "Henrique Ferreira", strong: true },
+];
+
+const BIO: Segment[] = [
+  { text: "A " },
+  { text: "road cycling", strong: true },
+  { text: " enthusiast and " },
+  { text: "product engineer", strong: true },
+  { text: " with over 25 years of experience shipping " },
+  { text: "digital products", strong: true },
+  { text: " for web, desktop and mobile platforms with highest standards." },
+];
+
+const toPlainText = (segments: Segment[]) =>
+  segments.map((s) => s.text).join("");
+
+const varStyle = (vars: Record<string, number>) =>
+  vars as unknown as React.CSSProperties;
+
+// Name is typed out character by character, with a block caret following.
+function Typed({ segments }: { segments: Segment[] }) {
+  const total = toPlainText(segments).length;
+  let c = 0;
+
+  return segments.map((segment, si) => {
+    const words = segment.text.split(/( )/).filter(Boolean);
+    const chars = words.map((word, wi) => (
+      <span key={wi} className={styles.nowrap}>
+        {[...word].map((char) => {
+          const index = c++;
+          return (
+            <span
+              key={index}
+              className={`${styles.char} ${index === total - 1 ? styles.last : ""}`}
+              style={varStyle({ "--c": index })}
+            >
+              {char}
+            </span>
+          );
+        })}
+      </span>
+    ));
+    return segment.strong ? (
+      <b key={si} className={styles.strong}>
+        {chars}
+      </b>
+    ) : (
+      <span key={si}>{chars}</span>
+    );
+  });
+}
+
+// Bio words come into focus one after another.
+function Focused({ segments }: { segments: Segment[] }) {
+  let w = 0;
+
+  return segments.map((segment, si) => {
+    const words = segment.text.split(/( )/).filter(Boolean);
+    const nodes = words.map((word, wi) => {
+      if (word === " ") return " ";
+      const index = w++;
+      return (
+        <span
+          key={wi}
+          className={styles.word}
+          style={varStyle({ "--w": index })}
+        >
+          {word}
+        </span>
+      );
+    });
+    return segment.strong ? (
+      <b key={si} className={styles.strong}>
+        {nodes}
+      </b>
+    ) : (
+      <span key={si}>{nodes}</span>
+    );
+  });
+}
+
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -46,14 +131,16 @@ export default function AboutSection() {
                 <div className={styles.avatar_image} />
               </div>
               <h1 className={styles.heading}>
-                I&apos;m <b className={styles.strong}>Henrique Ferreira</b>
+                <span className={styles.sr_only}>{toPlainText(NAME)}</span>
+                <span aria-hidden="true">
+                  <Typed segments={NAME} />
+                </span>
               </h1>
               <h3 className={styles.heading}>
-                A <b className={styles.strong}>road cycling</b> enthusiast and{" "}
-                <b className={styles.strong}>product engineer</b> with over 25
-                years of experience shipping{" "}
-                <b className={styles.strong}>digital products</b> for web,{" "}
-                desktop and mobile platforms with highest standards.
+                <span className={styles.sr_only}>{toPlainText(BIO)}</span>
+                <span aria-hidden="true">
+                  <Focused segments={BIO} />
+                </span>
               </h3>
               <div className={styles.social_icons}>
                 <SocialIcons />
