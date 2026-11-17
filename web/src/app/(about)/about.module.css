@@ -39,10 +39,112 @@
   width: 120px;
   height: 120px;
   border-radius: 60px;
-  background-image: url("/avatar.jpg");
-  background-size: cover;
   border: 2px solid var(--border_highlight_color);
   background-color: var(--border_discreet_color);
+}
+
+/* ---- old CRT screen: scanline texture with subtle signal distortion ---- */
+.avatar {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.avatar_image {
+  position: absolute;
+  inset: -3px; /* bleed so horizontal jitter never exposes the edge */
+  background-image: url("/avatar.jpg");
+  background-size: cover;
+  animation: crt_jitter 7s steps(1, end) infinite;
+}
+
+/* scanlines + vignette */
+.avatar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 2px,
+      color-mix(in srgb, var(--bg_primary_color) 35%, transparent) 2px 4px
+    ),
+    radial-gradient(
+      circle at center,
+      transparent 55%,
+      color-mix(in srgb, var(--bg_primary_color) 70%, transparent) 100%
+    );
+}
+
+/* soft interference band slowly rolling down the screen */
+.avatar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 30%;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in srgb, var(--text_primary_color) 10%, transparent) 50%,
+    transparent
+  );
+  transform: translateY(-100%);
+  animation: crt_roll 5s linear infinite;
+}
+
+@keyframes crt_roll {
+  to {
+    transform: translateY(440%);
+  }
+}
+
+/* brief horizontal sync slips, irregularly spaced */
+@keyframes crt_jitter {
+  0%,
+  100% {
+    transform: none;
+  }
+  23% {
+    transform: translateX(2px) skewX(-2deg);
+  }
+  24% {
+    transform: translateX(-1px);
+  }
+  25% {
+    transform: none;
+  }
+  61% {
+    transform: translateX(-2px) skewX(1.5deg);
+  }
+  62% {
+    transform: translateX(1px) skewX(-1deg);
+  }
+  63.5% {
+    transform: none;
+  }
+  88% {
+    transform: translateX(1px);
+  }
+  89% {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar_image,
+  .avatar::after {
+    animation: none;
+  }
+
+  .avatar::after {
+    display: none;
+  }
 }
 
 .social_icons {

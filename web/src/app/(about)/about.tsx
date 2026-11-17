@@ -26,7 +26,9 @@ export default function AboutSection() {
                 showIntro ? styles.show : styles.hide,
               ])}
             >
-              <div className={styles.avatar} />
+              <div className={styles.avatar}>
+                <div className={styles.avatar_image} />
+              </div>
               <h1 className={styles.heading}>
                 I am <b className={styles.strong}>Henrique Ferreira</b>
               </h1>
