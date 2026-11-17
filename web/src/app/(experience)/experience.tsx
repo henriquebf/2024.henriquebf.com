@@ -304,7 +304,6 @@ function Chapter({ group }: { group: CountryGroup }) {
 
 export default function ExperienceSection() {
   const timelineRef = useRef<HTMLDivElement>(null);
-  const earlierRef = useRef<HTMLDivElement>(null);
   const earlierListRef = useRef<HTMLDivElement>(null);
   const fromHeight = useRef<number | null>(null);
   const [showEarlier, setShowEarlier] = useState(false);
@@ -312,16 +311,8 @@ export default function ExperienceSection() {
   const prefersReducedMotion = () =>
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // The button sits below the list, so collapsing would leave the reader far
-  // past the section; bring the "Earlier career" heading back into view.
   const toggleEarlier = () => {
     fromHeight.current = earlierListRef.current?.offsetHeight ?? null;
-    if (showEarlier) {
-      earlierRef.current?.scrollIntoView({
-        block: "start",
-        behavior: prefersReducedMotion() ? "auto" : "smooth",
-      });
-    }
     setShowEarlier(!showEarlier);
   };
 
@@ -433,16 +424,32 @@ export default function ExperienceSection() {
               </Fragment>
             ))}
 
-            <div ref={earlierRef} className={styles.earlier_anchor}>
-              <TimelineRow
-                node="chapter"
-                date={
-                  <div className={styles.chapter_years}>{earlierYears}</div>
-                }
-              >
+            <TimelineRow
+              node="chapter"
+              date={
+                <div className={styles.chapter_years}>{earlierYears}</div>
+              }
+            >
+              <div className={styles.chapter_row}>
                 <h3 className={styles.chapter}>Earlier career</h3>
-              </TimelineRow>
-            </div>
+                <button
+                  type="button"
+                  className={styles.toggle}
+                  aria-expanded={showEarlier}
+                  aria-controls="earlier-career"
+                  onClick={toggleEarlier}
+                >
+                  {showEarlier ? "Show less" : "Read the full story"}
+                  <IconArrow
+                    direction="down"
+                    className={classNames([
+                      styles.toggle_icon,
+                      showEarlier ? styles.flipped : "",
+                    ])}
+                  />
+                </button>
+              </div>
+            </TimelineRow>
 
             <div id="earlier-career" ref={earlierListRef}>
               {groupByCountry(earlierItems).map((group) => (
@@ -465,24 +472,6 @@ export default function ExperienceSection() {
               ))}
             </div>
 
-            <div className={styles.toggle_row}>
-              <button
-                type="button"
-                className={styles.toggle}
-                aria-expanded={showEarlier}
-                aria-controls="earlier-career"
-                onClick={toggleEarlier}
-              >
-                {showEarlier ? "Show less" : "Read the full story"}
-                <IconArrow
-                  direction="down"
-                  className={classNames([
-                    styles.toggle_icon,
-                    showEarlier ? styles.flipped : "",
-                  ])}
-                />
-              </button>
-            </div>
           </div>
         </div>
       </Container>

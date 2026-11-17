@@ -85,27 +85,25 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* clear the fixed header when scrolled back to on collapse */
-.earlier_anchor {
-  scroll-margin-top: 90px;
-}
-
-/* expand / collapse control, aligned with the content column */
-.toggle_row {
-  padding: 12px 0 0 calc(var(--date-w) + var(--rail-w));
+/* "Earlier career" heading with its expand / collapse control */
+.chapter_row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
 }
 
 .toggle {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 9px 18px;
+  padding: 3px 14px;
   border: 1px solid var(--border_discreet_color);
   border-radius: 999px;
   background: none;
   cursor: pointer;
   font: inherit;
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text_primary_color);
@@ -142,10 +140,6 @@
 
   .chapter {
     padding-left: 16px;
-  }
-
-  .toggle_row {
-    padding-left: calc(var(--date-w) + var(--rail-w) + 16px);
   }
 }
 
