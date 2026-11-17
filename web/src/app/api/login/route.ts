@@ -46,13 +46,17 @@ export async function GET(req: NextRequest) {
     session.athleteId = String(data.athlete.id);
     await session.save();
 
-    // Subscribe to push notifications (async)
-    const subscriptions = await getPushSubscriptions();
-    if (!subscriptions?.length) {
-      const response = await postPushSubscriptions();
-      if (!response) {
-        console.error("push: could not subscribe!");
+    // Subscribe to push notifications (failure must not break login)
+    try {
+      const subscriptions = await getPushSubscriptions();
+      if (!subscriptions?.length) {
+        const response = await postPushSubscriptions();
+        if (!response) {
+          console.error("push: could not subscribe!");
+        }
       }
+    } catch (err) {
+      console.error(err);
     }
 
     return Response.redirect(new URL("/admin/edit", req.url));
