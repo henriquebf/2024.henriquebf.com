@@ -75,16 +75,6 @@ export default function ExperienceItem({ item }: { item: ExperienceEntry }) {
               {paragraph}
             </p>
           ))}
-          {item.highlights && item.highlights.length > 0 && (
-            <div className={styles.highlights}>
-              <div className={styles.label}>Selected work</div>
-              <ul className={styles.highlight_list}>
-                {item.highlights.map((highlight) => (
-                  <li key={highlight}>{highlight}</li>
-                ))}
-              </ul>
-            </div>
-          )}
           <ul className={styles.bullets}>
             {item.bullets.map((bullet) => (
               <li key={bullet}>{bullet}</li>
