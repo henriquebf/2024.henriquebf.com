@@ -1,11 +1,17 @@
 "use client";
 
+import { Fragment, useEffect, useRef, useState } from "react";
 import Container from "@/components/layout/Container";
-import ExperienceItem from "@/components/shared/ExperienceItem";
+import ExperienceItem, {
+  ExperienceCompact,
+  ExperienceEntry,
+  TimelineRow,
+} from "@/components/shared/ExperienceItem";
+import IconArrow from "@/components/svg/IconArrow";
 import { classNames } from "@/helpers/utilsHelper";
 import styles from "./experience.module.css";
 
-const experienceItems = [
+const experienceItems: ExperienceEntry[] = [
   {
     time: `2024 - Now`,
     duration: `Current position`,
@@ -227,7 +233,109 @@ const experienceItems = [
   },
 ];
 
+// Roles starting before this year are collapsed into "Earlier career".
+const EARLIER_BEFORE = 2015;
+
+const startYear = (item: ExperienceEntry) => parseInt(item.time, 10);
+const endYear = (item: ExperienceEntry) =>
+  item.time.split(" - ")[1]?.trim() ?? item.time.trim();
+const country = (item: ExperienceEntry) =>
+  item.location
+    .replace(/\(.*\)/, "")
+    .split(",")
+    .pop()!
+    .trim();
+
+type CountryGroup = { country: string; years: string; items: ExperienceEntry[] };
+
+// Consecutive entries in the same country become one chapter of the timeline.
+function groupByCountry(items: ExperienceEntry[]): CountryGroup[] {
+  const groups: { country: string; items: ExperienceEntry[] }[] = [];
+  for (const item of items) {
+    const last = groups[groups.length - 1];
+    if (last && last.country === country(item)) last.items.push(item);
+    else groups.push({ country: country(item), items: [item] });
+  }
+  return groups.map(({ country, items }) => {
+    const from = Math.min(...items.map(startYear));
+    const ends = items.map(endYear);
+    const to = ends.includes("Now")
+      ? "Now"
+      : String(Math.max(...ends.map((year) => parseInt(year, 10))));
+    return {
+      country,
+      years: String(from) === to ? to : `${from} – ${to}`,
+      items,
+    };
+  });
+}
+
+const recentItems = experienceItems.filter((i) => startYear(i) >= EARLIER_BEFORE);
+const earlierItems = experienceItems.filter((i) => startYear(i) < EARLIER_BEFORE);
+const earlierYears = `${Math.min(...earlierItems.map(startYear))} – ${
+  EARLIER_BEFORE - 1
+}`;
+
+function Chapter({ group }: { group: CountryGroup }) {
+  return (
+    <TimelineRow
+      node="chapter"
+      date={<div className={styles.chapter_years}>{group.years}</div>}
+    >
+      <h3 className={styles.chapter}>{group.country}</h3>
+    </TimelineRow>
+  );
+}
+
 export default function ExperienceSection() {
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const earlierRef = useRef<HTMLDivElement>(null);
+  const [showEarlier, setShowEarlier] = useState(false);
+
+  // The button sits below the list, so collapsing would leave the reader far
+  // past the section; bring the "Earlier career" heading back into view.
+  const toggleEarlier = () => {
+    if (showEarlier) {
+      earlierRef.current?.scrollIntoView({ block: "start" });
+    }
+    setShowEarlier(!showEarlier);
+  };
+
+  // Fill the rail up to the middle of the viewport and light up the nodes
+  // that have been passed. Written straight to the DOM to avoid re-renders.
+  useEffect(() => {
+    const timeline = timelineRef.current;
+    if (!timeline) return;
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      const rect = timeline.getBoundingClientRect();
+      const center = window.innerHeight / 2;
+      const progress = Math.min(Math.max(center - rect.top, 0), rect.height);
+      timeline.style.setProperty("--progress", `${progress}px`);
+      timeline.querySelectorAll<HTMLElement>("[data-node]").forEach((node) => {
+        const reached = node.getBoundingClientRect().top < center;
+        node.dataset.reached = String(reached);
+      });
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    const observer = new ResizeObserver(schedule);
+    observer.observe(timeline);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <section id="experience" className={styles.experience}>
       <Container>
@@ -242,43 +350,67 @@ export default function ExperienceSection() {
             experience in business management and leading the growth of software
             engineering teams.
           </p>
-          <div className={styles.experience_top}></div>
-          <div className={styles.wrapper}>
-            <div className={styles.experience_dummy} />
-            <div
-              className={classNames([styles.experience_center, styles.first])}
-            />
-            <div className={styles.experience_dummy} />
+
+          <div ref={timelineRef} className={styles.timeline}>
+            <div className={styles.rail} aria-hidden="true">
+              <div className={styles.rail_fill} />
+            </div>
+
+            {groupByCountry(recentItems).map((group) => (
+              <Fragment key={group.country + group.years}>
+                <Chapter group={group} />
+                {group.items.map((item) => (
+                  <ExperienceItem key={item.title + item.time} item={item} />
+                ))}
+              </Fragment>
+            ))}
+
+            <div ref={earlierRef} className={styles.earlier_anchor}>
+              <TimelineRow
+                node="chapter"
+                date={<div className={styles.chapter_years}>{earlierYears}</div>}
+              >
+                <h3 className={styles.chapter}>Earlier career</h3>
+              </TimelineRow>
+            </div>
+
+            <div id="earlier-career">
+              {groupByCountry(earlierItems).map((group) => (
+                <Fragment key={group.country + group.years}>
+                  <Chapter group={group} />
+                  {group.items.map((item) =>
+                    showEarlier ? (
+                      <ExperienceItem key={item.title + item.time} item={item} />
+                    ) : (
+                      <ExperienceCompact
+                        key={item.title + item.time}
+                        item={item}
+                      />
+                    )
+                  )}
+                </Fragment>
+              ))}
+            </div>
+
+            <div className={styles.toggle_row}>
+              <button
+                type="button"
+                className={styles.toggle}
+                aria-expanded={showEarlier}
+                aria-controls="earlier-career"
+                onClick={toggleEarlier}
+              >
+                {showEarlier ? "Show less" : "Read the full story"}
+                <IconArrow
+                  direction="down"
+                  className={classNames([
+                    styles.toggle_icon,
+                    showEarlier ? styles.flipped : "",
+                  ])}
+                />
+              </button>
+            </div>
           </div>
-          {experienceItems.map((item, i) => {
-            if (i % 2 === 0) {
-              return (
-                <div key={i} className={styles.wrapper}>
-                  <ExperienceItem item={item} direction="left" />
-                  <div
-                    className={classNames([
-                      styles.experience_center,
-                      styles.middle,
-                    ])}
-                  />
-                  <div className={styles.experience_dummy} />
-                </div>
-              );
-            } else {
-              return (
-                <div key={i} className={styles.wrapper}>
-                  <div className={styles.experience_dummy} />
-                  <div
-                    className={classNames([
-                      styles.experience_center,
-                      styles.middle,
-                    ])}
-                  />
-                  <ExperienceItem item={item} direction="right" />
-                </div>
-              );
-            }
-          })}
         </div>
       </Container>
     </section>

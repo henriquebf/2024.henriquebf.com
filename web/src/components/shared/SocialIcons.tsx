@@ -1,3 +1,4 @@
+import IconArrow from "../svg/IconArrow";
 import styles from "./SocialIcons.module.css";
 
 const socialLinks = [
@@ -20,9 +21,7 @@ export default function SocialIcons() {
               className={styles.link}
             >
               {label}
-              <span className={styles.arrow} aria-hidden="true">
-                ↗
-              </span>
+              <IconArrow className={styles.arrow} />
             </a>
           </li>
         ))}

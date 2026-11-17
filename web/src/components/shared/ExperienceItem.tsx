@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { classNames } from "@/helpers/utilsHelper";
+import IconArrow from "@/components/svg/IconArrow";
 import styles from "./ExperienceItem.module.css";
 
 type Link = {
@@ -10,7 +11,7 @@ type Link = {
   url: string;
 };
 
-type Item = {
+export type ExperienceEntry = {
   time: string;
   duration: string;
   title: string;
@@ -23,63 +24,106 @@ type Item = {
   link?: Link;
 };
 
-export default function ExperienceItem({
-  direction,
-  item,
+// One row of the vertical timeline: date column, rail node, content.
+// On mobile the date column collapses and the date sits above the content.
+export function TimelineRow({
+  date,
+  node,
+  stickyDate = false,
+  className,
+  children,
 }: {
-  direction: "left" | "right";
-  item: Item;
+  date: ReactNode;
+  node: "entry" | "chapter" | "compact";
+  stickyDate?: boolean;
+  className?: string;
+  children: ReactNode;
 }) {
-  const className = direction === "left" ? styles.left : styles.right;
-
   return (
-    <div>
-      {item.thumb && (
-        <CrtThumb className={className} src={item.thumb} alt={item.title} />
-      )}
-      <div className={classNames([styles.title, className])}>
-        <h3 className={styles.heading}>{item.title}</h3>
+    <div className={classNames([styles.row, styles[`row_${node}`], className ?? ""])}>
+      <div className={styles.date}>
+        <div className={stickyDate ? styles.sticky : ""}>{date}</div>
       </div>
-      <div className={classNames([styles.position, className])}>
-        {item.position}
+      <div className={styles.rail_cell} aria-hidden="true">
+        <span data-node className={classNames([styles.node, styles[`node_${node}`]])} />
       </div>
-      <div className={classNames([styles.time, className])}>
-        {item.time} ({item.duration})
-      </div>
-      {item.description.map((paragraph, i) => (
-        <div key={i} className={classNames([styles.description, className])}>
-          {paragraph}
-        </div>
-      ))}
-
-      {item.link && (
-        <div className={classNames([styles.link, className])}>
-          <a href={item.link.url} rel="noreferrer" target="_blank">
-            {item.link.text}
-          </a>
-        </div>
-      )}
-      <ul className={classNames([styles.bullets, className])}>
-        {item.bullets.map((item, i) => (
-          <li key={i}>{item}</li>
-        ))}
-      </ul>
-      <div className={classNames([styles.line, className])}></div>
+      <div className={styles.body}>{children}</div>
     </div>
+  );
+}
+
+export default function ExperienceItem({ item }: { item: ExperienceEntry }) {
+  return (
+    <TimelineRow
+      node="entry"
+      stickyDate
+      date={
+        <>
+          <div className={styles.date_time}>{item.time}</div>
+          <div className={styles.date_duration}>{item.duration}</div>
+        </>
+      }
+    >
+      <article className={styles.entry}>
+        {item.thumb && <CrtThumb src={item.thumb} alt={item.title} />}
+        <div className={styles.text}>
+          <h3 className={styles.heading}>{item.title}</h3>
+          <div className={styles.position}>{item.position}</div>
+          <div className={styles.location}>{item.location}</div>
+          {item.description.map((paragraph, i) => (
+            <p key={i} className={styles.description}>
+              {paragraph}
+            </p>
+          ))}
+          {item.highlights && item.highlights.length > 0 && (
+            <div className={styles.highlights}>
+              <div className={styles.label}>Selected work</div>
+              <ul className={styles.highlight_list}>
+                {item.highlights.map((highlight) => (
+                  <li key={highlight}>{highlight}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <ul className={styles.bullets}>
+            {item.bullets.map((bullet) => (
+              <li key={bullet}>{bullet}</li>
+            ))}
+          </ul>
+          {item.link && (
+            <a
+              className={styles.link}
+              href={item.link.url}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {item.link.text}
+              <IconArrow />
+            </a>
+          )}
+        </div>
+      </article>
+    </TimelineRow>
+  );
+}
+
+// Compact one-line version, used for the collapsed early career.
+export function ExperienceCompact({ item }: { item: ExperienceEntry }) {
+  return (
+    <TimelineRow node="compact" date={<div className={styles.date_time}>{item.time}</div>}>
+      <div className={styles.compact}>
+        <span className={styles.compact_title}>{item.title}</span>
+        <span className={styles.compact_meta}>
+          {item.position} · {item.location.split(",")[0]}
+        </span>
+      </div>
+    </TimelineRow>
   );
 }
 
 // Logo thumbnail that "switches on" like an old CRT the first time it scrolls
 // into view, then stays static.
-function CrtThumb({
-  className,
-  src,
-  alt,
-}: {
-  className: string;
-  src: string;
-  alt: string;
-}) {
+function CrtThumb({ src, alt }: { src: string; alt: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [isOn, setOn] = useState(false);
 
@@ -100,10 +144,7 @@ function CrtThumb({
   }, []);
 
   return (
-    <div
-      ref={ref}
-      className={classNames([styles.thumb, className, isOn ? styles.on : ""])}
-    >
+    <div ref={ref} className={classNames([styles.thumb, isOn ? styles.on : ""])}>
       <Image src={`/${src}`} alt={alt} width={540} height={250} />
     </div>
   );

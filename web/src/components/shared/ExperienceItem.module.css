@@ -1,22 +1,313 @@
+/* ================= timeline row layout =================
+   --date-w / --rail-w are defined on the timeline container
+   (experience.module.css) so the continuous rail lines up with the nodes. */
+
+.row {
+  display: grid;
+  grid-template-columns: var(--rail-w) 1fr;
+  grid-template-areas:
+    "rail date"
+    "rail body";
+}
+
+.date {
+  grid-area: date;
+}
+
+.rail_cell {
+  grid-area: rail;
+  position: relative;
+}
+
+.body {
+  grid-area: body;
+  min-width: 0;
+}
+
+.row_entry {
+  padding-bottom: 56px;
+}
+
+.row_chapter {
+  padding: 8px 0 28px;
+}
+
+.row_compact {
+  padding-bottom: 18px;
+}
+
+/* ---- rail nodes ---- */
+.node {
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  border: 2px solid var(--border_discreet_color);
+  background-color: var(--bg_secondary_color);
+  transition:
+    border-color 0.3s,
+    background-color 0.3s,
+    box-shadow 0.3s;
+}
+
+.node_entry {
+  width: 11px;
+  height: 11px;
+}
+
+.node_chapter {
+  top: 5px;
+  width: 15px;
+  height: 15px;
+}
+
+.node_chapter::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 50%;
+  background-color: var(--border_discreet_color);
+  transition: background-color 0.3s;
+}
+
+.node[data-reached="true"] {
+  border-color: var(--border_highlight_color);
+}
+
+.node_entry[data-reached="true"],
+.node_compact[data-reached="true"] {
+  background-color: var(--border_highlight_color);
+  box-shadow: 0 0 10px
+    color-mix(in srgb, var(--border_highlight_color) 60%, transparent);
+}
+
+.node_chapter[data-reached="true"]::after {
+  background-color: var(--border_highlight_color);
+}
+
+/* ---- date column ---- */
+.date_time {
+  font-weight: 500;
+  color: var(--text_primary_color);
+  font-variant-numeric: tabular-nums;
+}
+
+.date_duration {
+  font-size: 14px;
+  color: var(--text_secondary_color);
+}
+
+.row_entry .date {
+  margin-bottom: 14px;
+}
+
+.row_entry .date > div {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.row_compact .date_time {
+  font-weight: 400;
+  color: var(--text_secondary_color);
+}
+
+/* ================= entry content ================= */
+.entry {
+  display: grid;
+  grid-template-columns: 100%;
+  gap: 20px;
+}
+
+.heading {
+  margin: 0;
+  font-size: 1.3em;
+  line-height: 1.3;
+}
+
+.position {
+  color: var(--text_primary_color);
+}
+
+.location {
+  font-size: 14px;
+  color: var(--text_secondary_color);
+}
+
+.description {
+  margin: 1em 0 0;
+  color: var(--text_secondary_color);
+}
+
+.highlights {
+  margin-top: 1.25em;
+}
+
+.label {
+  margin-bottom: 4px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text_secondary_color);
+}
+
+.highlight_list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text_primary_color);
+}
+
+/* small teal marker per item: wraps cleanly, unlike inline separators */
+.highlight_list > li::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin-right: 8px;
+  vertical-align: middle;
+  background-color: var(--border_highlight_color);
+}
+
+.bullets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 1.25em 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bullets > li {
+  padding: 0 10px;
+  font-size: 13px;
+  line-height: 24px;
+  border-radius: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--border_highlight_color);
+  border: 1px solid
+    color-mix(in srgb, var(--border_highlight_color) 60%, transparent);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 1.25em;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text_primary_color);
+}
+
+/* ---- compact (collapsed early career) ---- */
+.compact {
+  display: flex;
+  flex-direction: column;
+}
+
+.compact_title {
+  color: var(--text_primary_color);
+}
+
+.compact_meta {
+  font-size: 14px;
+  color: var(--text_secondary_color);
+}
+
+@media (min-width: 1200px) {
+  .row {
+    grid-template-columns: var(--date-w) var(--rail-w) 1fr;
+    grid-template-areas: "date rail body";
+  }
+
+  .row_entry .date,
+  .row_compact .date {
+    margin: 0;
+    padding-right: 24px;
+    text-align: right;
+  }
+
+  .row_entry .date > div {
+    display: block;
+  }
+
+  .sticky {
+    position: sticky;
+    top: 90px; /* clears the fixed header */
+  }
+
+  .date_time {
+    font-size: 1.3em;
+    line-height: 1.3;
+  }
+
+  .row_compact .date_time {
+    font-size: 1em;
+    line-height: 1.5;
+  }
+
+  .row_entry {
+    padding-bottom: 96px;
+  }
+
+  .row_compact {
+    padding-bottom: 14px;
+  }
+
+  .node_entry {
+    top: 10px;
+  }
+
+  .entry {
+    grid-template-columns: 1fr 460px;
+    grid-template-areas: "text thumb";
+    gap: 48px;
+    padding-left: 16px;
+  }
+
+  .entry > .text {
+    grid-area: text;
+  }
+
+  .entry > .thumb {
+    grid-area: thumb;
+  }
+
+  .compact {
+    flex-direction: row;
+    gap: 12px;
+    align-items: baseline;
+    padding-left: 16px;
+  }
+
+  .compact_meta {
+    font-size: 1em;
+  }
+}
+
+/* ================= CRT logo thumbnail ================= */
 .thumb {
-  /* mobile: full-width screen keeping the 540x250 proportions */
+  position: relative;
+  isolation: isolate;
   width: 100%;
   max-width: 540px;
   aspect-ratio: 540 / 250;
-  margin-top: 40px;
-  margin-bottom: 20px;
-  border-radius: 15px;
+  align-self: start;
+  border-radius: 12px;
   overflow: hidden;
   background-color: var(--border_discreet_color);
   border: 2px solid var(--border_highlight_color);
 }
 
 /* ---- old CRT screen: switched off until in view, then powers on ---- */
-.thumb {
-  position: relative;
-  isolation: isolate;
-}
-
 .thumb img {
   display: block;
   width: 100%;
@@ -116,89 +407,9 @@
   .thumb.on::after {
     animation: none;
   }
-}
 
-.description {
-  color: var(--text_secondary_color);
-}
-
-@media (min-width: 1200px) {
-  .thumb {
-    width: 540px;
-    height: 250px;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
-  .line {
-    border-bottom: 1px solid var(--border_highlight_color);
-  }
-
-  .left {
-    padding-right: 60px;
-  }
-
-  .right {
-    padding-left: 60px;
-    margin-left: -1px; /* fix: remove 1px gab to the vertical line */
-  }
-
-  .thumb,
-  .bullets {
-    padding: 0;
-  }
-
-  .thumb.left,
-  .bullets.left {
-    margin-right: 60px;
-  }
-
-  .thumb.right,
-  .bullets.right {
-    margin-left: 60px;
-  }
-}
-
-.heading {
-  margin-bottom: 0;
-}
-
-.description {
-  padding-top: 1em;
-}
-
-.link {
-  padding-top: 1em;
-}
-
-.bullets {
-  display: none;
-}
-
-@media (min-width: 1200px) {
-  .bullets {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 0;
-    padding: 0;
-    padding-top: 1em;
-    height: 32px;
-  }
-
-  .bullets.right {
-    flex-direction: row-reverse;
-  }
-
-  .bullets > li {
-    list-style-type: none;
-    padding: 0 10px;
-    line-height: 30px;
-    height: 33px;
-    border-radius: 15px;
-    text-transform: uppercase;
-    color: var(--border_highlight_color);
-    border: 2px solid var(--border_highlight_color);
-    background-color: var(--bg_secondary_color);
+  .node,
+  .node_chapter::after {
+    transition: none;
   }
 }

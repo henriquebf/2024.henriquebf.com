@@ -14,67 +14,143 @@
   color: var(--text_secondary_color);
 }
 
-.wrapper {
-  display: grid;
-  grid-template-columns: 100%;
+/* ================= vertical timeline ================= */
+.timeline {
+  --date-w: 0px;
+  --rail-w: 28px;
+  --rail-x: calc(var(--date-w) + var(--rail-w) / 2);
+  --progress: 0px;
+  position: relative;
+  margin-top: 48px;
 }
 
-.experience_top {
-  display: none;
+/* the continuous line behind the nodes */
+.rail {
+  position: absolute;
+  top: 12px;
+  bottom: 0;
+  left: calc(var(--rail-x) - 1px);
+  width: 2px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    var(--border_discreet_color) 85%,
+    transparent
+  );
 }
 
-.experience_center {
-  display: none;
+/* the part already scrolled past, with a glowing head */
+.rail_fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: max(0px, calc(var(--progress) - 12px));
+  max-height: 100%;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--border_highlight_color) 30%, transparent),
+    var(--border_highlight_color)
+  );
 }
 
-.experience_dummy {
-  display: none;
+.rail_fill::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: -2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--border_highlight_color);
+  box-shadow: 0 0 12px 3px
+    color-mix(in srgb, var(--border_highlight_color) 55%, transparent);
+}
+
+/* ---- chapter markers (country / earlier career) ---- */
+.chapter {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 25px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--border_highlight_color);
+}
+
+.chapter_years {
+  font-size: 14px;
+  line-height: 25px;
+  color: var(--text_secondary_color);
+  font-variant-numeric: tabular-nums;
+}
+
+/* clear the fixed header when scrolled back to on collapse */
+.earlier_anchor {
+  scroll-margin-top: 90px;
+}
+
+/* expand / collapse control, aligned with the content column */
+.toggle_row {
+  padding: 12px 0 0 calc(var(--date-w) + var(--rail-w));
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 18px;
+  border: 1px solid var(--border_discreet_color);
+  border-radius: 999px;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text_primary_color);
+  transition:
+    color 0.2s,
+    border-color 0.2s;
+}
+
+.toggle:hover,
+.toggle:focus-visible {
+  color: var(--text_active_color);
+  border-color: var(--border_highlight_color);
+}
+
+.toggle_icon {
+  transition: transform 0.2s;
+}
+
+.flipped {
+  transform: rotate(180deg);
 }
 
 @media (min-width: 1200px) {
-  .experience_top {
-    display: block;
-    width: 100px;
-    height: 1px;
-    margin: 0 auto;
-    background-color: var(--border_highlight_color);
+  .timeline {
+    --date-w: 180px;
+    --rail-w: 48px;
+    margin-top: 64px;
   }
 
-  .wrapper {
-    grid-template-columns: 50% 1px 50%;
+  .chapter_years {
+    padding-right: 24px;
+    text-align: right;
   }
 
-  .experience_center {
-    display: block;
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
+  .chapter {
+    padding-left: 16px;
   }
 
-  .experience_center:after {
-    content: "";
-    position: absolute;
-    width: 1px;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    margin-left: -1px;
+  .toggle_row {
+    padding-left: calc(var(--date-w) + var(--rail-w) + 16px);
   }
+}
 
-  .experience_center.middle:after {
-    background-color: var(--border_highlight_color);
-  }
-
-  .experience_center.first,
-  .experience_center.last {
-    height: 60px;
-  }
-
-  .experience_center.first:after {
-    background-color: var(--border_highlight_color);
-  }
-
-  .experience_dummy {
-    display: block;
+@media (prefers-reduced-motion: reduce) {
+  .rail_fill::after {
+    box-shadow: none;
   }
 }

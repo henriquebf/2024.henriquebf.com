@@ -1,25 +1,22 @@
+/* mobile: tidy 2x2 grid, no separators to strand at line starts */
 .social_links {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 0;
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: 10px 36px;
   margin: 0;
   padding: 0;
   list-style: none;
   font-size: 14px;
+  line-height: 1.5;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text_secondary_color);
 }
 
-/* middot separators, matching the header nav */
-.social_links > li + li::before {
-  content: "·";
-  margin: 0 12px;
-  color: var(--border_highlight_color);
-}
-
 .link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: inherit;
   transition: color 0.2s;
 }
@@ -30,9 +27,8 @@
 }
 
 .arrow {
-  display: inline-block;
-  margin-left: 3px;
-  opacity: 0.5;
+  flex: none;
+  opacity: 0.6;
   transition:
     opacity 0.2s,
     transform 0.2s;
@@ -41,7 +37,21 @@
 .link:hover .arrow,
 .link:focus-visible .arrow {
   opacity: 1;
-  transform: translate(2px, -2px);
+  transform: translate(1px, -1px);
+}
+
+/* desktop: one line with middot separators, matching the header nav */
+@media (min-width: 1200px) {
+  .social_links {
+    display: flex;
+    gap: 0;
+  }
+
+  .social_links > li + li::before {
+    content: "·";
+    margin: 0 14px;
+    color: var(--border_highlight_color);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
