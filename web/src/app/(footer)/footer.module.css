@@ -18,14 +18,8 @@
   color: var(--text_secondary_color);
 }
 
-.email {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 .email_link {
+  display: inline-block;
   font-size: clamp(22px, 6.4vw, 40px);
   font-weight: 300;
   line-height: 1.2;
@@ -37,38 +31,6 @@
 .email_link:hover,
 .email_link:focus-visible {
   color: var(--text_active_color);
-}
-
-/* copy-to-clipboard is desktop only: on phones tapping the address opens Mail */
-.copy,
-.copied {
-  display: none;
-}
-
-.copy {
-  flex: none;
-  padding: 6px;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  color: inherit;
-}
-
-/* positioned below so it never shifts the email around */
-.copied {
-  position: absolute;
-  left: 0;
-  top: 100%;
-  margin-top: 6px;
-  font-size: 14px;
-  color: var(--text_active_color);
-  opacity: 0;
-  transition: opacity 0.6s;
-}
-
-.copied.visible {
-  opacity: 1;
-  transition-duration: 0.15s;
 }
 
 /* ---- bottom bar ---- */
@@ -90,21 +52,6 @@
 @media (min-width: 1200px) {
   .contact {
     padding: 90px 0 70px;
-  }
-
-  .email {
-    display: inline-flex;
-    gap: 14px;
-  }
-
-  .copy {
-    display: inline-flex;
-  }
-
-  .copied {
-    display: inline;
-    position: static;
-    margin: 0;
   }
 
   .bottom {
