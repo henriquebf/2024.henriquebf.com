@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { classNames } from "@/helpers/utilsHelper";
 import styles from "./ExperienceItem.module.css";
@@ -32,14 +35,7 @@ export default function ExperienceItem({
   return (
     <div>
       {item.thumb && (
-        <div className={classNames([styles.thumb, className])}>
-          <Image
-            src={`/${item.thumb}`}
-            alt={item.title}
-            width={540}
-            height={250}
-          />
-        </div>
+        <CrtThumb className={className} src={item.thumb} alt={item.title} />
       )}
       <div className={classNames([styles.title, className])}>
         <h3 className={styles.heading}>{item.title}</h3>
@@ -69,6 +65,46 @@ export default function ExperienceItem({
         ))}
       </ul>
       <div className={classNames([styles.line, className])}></div>
+    </div>
+  );
+}
+
+// Logo thumbnail that "switches on" like an old CRT the first time it scrolls
+// into view, then stays static.
+function CrtThumb({
+  className,
+  src,
+  alt,
+}: {
+  className: string;
+  src: string;
+  alt: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isOn, setOn] = useState(false);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setOn(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={classNames([styles.thumb, className, isOn ? styles.on : ""])}
+    >
+      <Image src={`/${src}`} alt={alt} width={540} height={250} />
     </div>
   );
 }

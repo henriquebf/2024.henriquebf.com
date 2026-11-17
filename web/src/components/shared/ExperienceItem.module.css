@@ -8,6 +8,111 @@
   border: 2px solid var(--border_highlight_color);
 }
 
+/* ---- old CRT screen: switched off until in view, then powers on ---- */
+.thumb {
+  position: relative;
+  isolation: isolate;
+}
+
+.thumb img {
+  display: block;
+  opacity: 0; /* screen off */
+  /* phosphor glow + slight RGB split using the palette colors */
+  filter: drop-shadow(1px 0 0 color-mix(in srgb, var(--accent_color) 55%, transparent))
+    drop-shadow(-1px 0 0 color-mix(in srgb, var(--text_active_color) 55%, transparent))
+    drop-shadow(0 0 6px color-mix(in srgb, var(--border_highlight_color) 45%, transparent));
+}
+
+/* scanlines + vignette */
+.thumb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 2px,
+      color-mix(in srgb, var(--bg_primary_color) 55%, transparent) 2px 4px
+    ),
+    radial-gradient(
+      ellipse at center,
+      transparent 55%,
+      color-mix(in srgb, var(--bg_primary_color) 85%, transparent) 100%
+    );
+}
+
+/* power-on beam: dot -> horizontal line -> full screen flash */
+.thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  background-color: var(--text_primary_color);
+  box-shadow: 0 0 12px 2px var(--border_highlight_color);
+  transform: scale(0, 0.01);
+}
+
+.thumb.on img {
+  animation: crt_on_image 0.9s ease-out forwards;
+}
+
+.thumb.on::after {
+  animation: crt_on_beam 0.9s ease-out forwards;
+}
+
+@keyframes crt_on_beam {
+  0% {
+    opacity: 1;
+    transform: scale(0.02, 0.01);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1, 0.01);
+  }
+  55% {
+    opacity: 0.7;
+    transform: scale(1, 1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes crt_on_image {
+  0%,
+  30% {
+    opacity: 0;
+    transform: scale(1, 0.01);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1, 1.04);
+  }
+  70% {
+    transform: scale(1, 0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thumb img {
+    opacity: 1;
+  }
+
+  .thumb.on img,
+  .thumb.on::after {
+    animation: none;
+  }
+}
+
 .description {
   color: var(--text_secondary_color);
 }
