@@ -1,52 +1,107 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { classNames } from "@/helpers/utilsHelper";
-import { useScrollPosition } from "@/hooks/useScrollPosition";
+import { siteName } from "@/lib/site";
 import Container from "@/components/layout/Container";
 import styles from "./header.module.css";
 
+const SECTIONS = [
+  { id: "about", label: "About" },
+  { id: "projects", label: "Projects & Interest" },
+  { id: "experience", label: "Experience" },
+  { id: "services", label: "Services" },
+];
+
+const SHOW_AFTER = 150;
+const HEADER_OFFSET = 64;
+
 export default function Header() {
-  const scrollPosition = useScrollPosition();
-  const [hideHeaderOverride, setHideHeaderOverride] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [active, setActive] = useState("about");
 
-  const showHeader = scrollPosition > 150 && !hideHeaderOverride;
+  // Toggle visibility past a threshold; only re-renders when it flips.
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      setVisible(window.scrollY > SHOW_AFTER);
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
 
-  const hideHeader = (e: any) => {
+  // Track which section sits in the reading band of the viewport.
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-35% 0px -60% 0px" },
+    );
+    SECTIONS.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollTo = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
     e.preventDefault();
-    const target = e.target.href?.split("#")[1] ?? "";
-    const element = document.getElementById(target);
-    element?.scrollIntoView();
-    setHideHeaderOverride(true);
-    setTimeout(() => setHideHeaderOverride(false), 50);
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const top =
+      id === "about"
+        ? 0
+        : el.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
+    window.scrollTo({ top, behavior: reduceMotion ? "auto" : "smooth" });
+    history.replaceState(null, "", `#${id}`);
   };
 
   return (
     <header
       id="header"
-      className={classNames([
-        styles.header,
-        showHeader ? styles.show : styles.hide,
-      ])}
+      className={classNames([styles.header, visible ? styles.show : undefined])}
     >
       <Container>
-        <nav className={styles.nav}>
-          <a href="#about" className={styles.link} onClick={hideHeader}>
-            About
+        <div className={styles.bar}>
+          <a
+            href="#about"
+            className={styles.brand}
+            onClick={(e) => scrollTo(e, "about")}
+          >
+            {siteName}
+            <span className={styles.caret} aria-hidden="true" />
           </a>
-          <div> &middot; </div>
-          <a href="#projects" className={styles.link} onClick={hideHeader}>
-            Projects & Interest
-          </a>
-          <div> &middot; </div>
-          <a href="#experience" className={styles.link} onClick={hideHeader}>
-            Experience
-          </a>
-          <div> &middot; </div>
-          <a href="#services" className={styles.link} onClick={hideHeader}>
-            Services
-          </a>
-        </nav>
+          <nav aria-label="Sections">
+            <ul className={styles.nav}>
+              {SECTIONS.map(({ id, label }) => (
+                <li key={id}>
+                  <a
+                    href={`#${id}`}
+                    className={styles.link}
+                    aria-current={active === id ? "location" : undefined}
+                    onClick={(e) => scrollTo(e, id)}
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
       </Container>
     </header>
   );
