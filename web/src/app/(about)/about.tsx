@@ -30,7 +30,7 @@ export default function AboutSection() {
                 <div className={styles.avatar_image} />
               </div>
               <h1 className={styles.heading}>
-                Hey, I&apos;m <b className={styles.strong}>Henrique Ferreira</b>
+                I&apos;m <b className={styles.strong}>Henrique Ferreira</b>
               </h1>
               <h3 className={styles.heading}>
                 A <b className={styles.strong}>road cycling</b> enthusiast and{" "}

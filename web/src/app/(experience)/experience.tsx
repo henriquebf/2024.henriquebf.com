@@ -426,9 +426,7 @@ export default function ExperienceSection() {
 
             <TimelineRow
               node="chapter"
-              date={
-                <div className={styles.chapter_years}>{earlierYears}</div>
-              }
+              date={<div className={styles.chapter_years}>{earlierYears}</div>}
             >
               <div className={styles.chapter_row}>
                 <h3 className={styles.chapter}>Earlier career</h3>
@@ -439,7 +437,7 @@ export default function ExperienceSection() {
                   aria-controls="earlier-career"
                   onClick={toggleEarlier}
                 >
-                  {showEarlier ? "Show less" : "Read the full story"}
+                  {showEarlier ? "Show less" : "Show full story"}
                   <IconArrow
                     direction="down"
                     className={classNames([
@@ -471,7 +469,6 @@ export default function ExperienceSection() {
                 </Fragment>
               ))}
             </div>
-
           </div>
         </div>
       </Container>
