@@ -12,6 +12,10 @@ export async function GET(req: NextRequest) {
   const session: any = await getSession();
 
   try {
+    const oauthError = searchParams.get("error");
+    if (oauthError) {
+      throw new Error(`oauth: strava returned "${oauthError}"`);
+    }
     const code = searchParams.get("code");
     if (typeof code !== "string") {
       throw new Error("oauth: code not provided!");
@@ -25,8 +29,10 @@ export async function GET(req: NextRequest) {
     const refreshToken = data.refresh_token;
 
     // Check if strava user has admin credentials
-    if (process.env.STRAVA_ADMIN_ID !== String(data.athlete.id)) {
-      return Response.redirect(new URL("/admin", req.url), 302);
+    if (process.env.STRAVA_ADMIN_ID?.trim() !== String(data.athlete.id)) {
+      throw new Error(
+        `auth: athlete ${data.athlete.id} does not match STRAVA_ADMIN_ID`
+      );
     }
 
     // Update Goal data
@@ -63,6 +69,11 @@ export async function GET(req: NextRequest) {
   } catch (err) {
     console.error(err);
     session.destroy();
-    return Response.redirect(new URL("/admin", req.url));
+    const url = new URL("/admin", req.url);
+    url.searchParams.set(
+      "error",
+      err instanceof Error ? err.message : "login failed"
+    );
+    return Response.redirect(url);
   }
 }

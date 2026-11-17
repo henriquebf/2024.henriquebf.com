@@ -8,8 +8,8 @@ export default async function Edit() {
   const session: any = await getSession();
   const athleteId = session.athleteId;
 
-  if (athleteId !== process.env.STRAVA_ADMIN_ID) {
-    redirect("https://henriquebf.com/admin");
+  if (!athleteId || athleteId !== process.env.STRAVA_ADMIN_ID?.trim()) {
+    redirect("/admin?error=session%3A%20no%20valid%20session%20cookie");
   }
 
   const currentYear = new Date().getFullYear();
