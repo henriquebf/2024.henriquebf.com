@@ -26,14 +26,14 @@ const experienceItems = [
   {
     time: `2025 - 2026`,
     duration: `1 year 5 months`,
-    title: `Milence R&D B.V.`,
+    title: `Milence Research and Development B.V.`,
     location: `Amsterdam, The Netherlands`,
     position: `Software Engineer, Consultant`,
     description: [
-      `As an external consultant, I have assisted Milence software engineering team in several internal micro-service migrations (authentication, site/asset information, etc), architectural decisions and implementation of full-stack features around the reservation and site availability systems.`,
+      `As an external consultant, I have assisted the software engineering team in several micro-service migrations, introduction of event based architecture with Kafka and iterations around the reservation and site availability systems.`,
     ],
     highlights: [`Reservations`, `Site Availability`, `Authentication`],
-    bullets: ["Typescript", "NestJS", "Kafka", "Azure"],
+    bullets: ["Azure", "Typescript", "NestJS", "Kafka"],
     thumb: "experience-thumb-milence.svg",
     link: {
       text: `Visit Milence website`,
