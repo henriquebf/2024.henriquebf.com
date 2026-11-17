@@ -21,18 +21,11 @@
 
 .content {
   width: 100%;
-  opacity: 1;
-  transition: opacity 0.25s;
 }
 
 .wrapper {
   display: grid;
   grid-template-columns: 100%;
-}
-
-.scale {
-  transform: scale(1);
-  transition: transform 0.25s;
 }
 
 .avatar {
@@ -152,23 +145,56 @@
 }
 
 @media (min-width: 1200px) {
+  .about {
+    --p: 0;
+  }
+
   .content {
     position: fixed;
+  }
+
+  .about[data-off="true"] .content {
+    visibility: hidden;
+    pointer-events: none;
   }
 
   .wrapper {
     grid-template-columns: 50% 50%;
   }
 
-  .content.hide {
-    opacity: 0;
+  /*
+   * CRT signal fade, scrubbed by scroll: the picture zooms out and
+   * loses focus, scanlines come in over it, it brightens slightly,
+   * then fades out.
+   */
+  .screen {
+    --fade: clamp(0, calc((var(--p) - 0.25) / 0.75), 1);
+    position: relative;
+    transform-origin: left center;
+    transform: scale(calc(1 - var(--p) * 0.08));
+    opacity: calc(1 - var(--fade));
+    filter: blur(calc(var(--p) * 4px)) brightness(calc(1 + var(--p) * 0.35));
+    will-change: transform, opacity, filter;
   }
 
-  .scale.hide {
-    transform: scale(0.95);
+  /* scanlines fade in over the whole block as the signal drops */
+  .screen::after {
+    content: "";
+    position: absolute;
+    inset: -24px -24px;
+    pointer-events: none;
+    opacity: calc(var(--p) * 0.9);
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0 2px,
+      color-mix(in srgb, var(--bg_primary_color) 70%, transparent) 2px 4px
+    );
   }
+}
 
-  .caret {
-    display: block;
+@media (min-width: 1200px) and (prefers-reduced-motion: reduce) {
+  .screen {
+    transform: none;
+    filter: none;
   }
 }
