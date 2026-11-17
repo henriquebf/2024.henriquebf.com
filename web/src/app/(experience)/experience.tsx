@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Container from "@/components/layout/Container";
 import ExperienceItem, {
   ExperienceCompact,
@@ -298,16 +298,69 @@ function Chapter({ group }: { group: CountryGroup }) {
 export default function ExperienceSection() {
   const timelineRef = useRef<HTMLDivElement>(null);
   const earlierRef = useRef<HTMLDivElement>(null);
+  const earlierListRef = useRef<HTMLDivElement>(null);
+  const fromHeight = useRef<number | null>(null);
   const [showEarlier, setShowEarlier] = useState(false);
+
+  const prefersReducedMotion = () =>
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // The button sits below the list, so collapsing would leave the reader far
   // past the section; bring the "Earlier career" heading back into view.
   const toggleEarlier = () => {
+    fromHeight.current = earlierListRef.current?.offsetHeight ?? null;
     if (showEarlier) {
-      earlierRef.current?.scrollIntoView({ block: "start" });
+      earlierRef.current?.scrollIntoView({
+        block: "start",
+        behavior: prefersReducedMotion() ? "auto" : "smooth",
+      });
     }
     setShowEarlier(!showEarlier);
   };
+
+  // Smooth the swap between compact and full entries: grow/shrink the list
+  // from its previous height and let the new rows fade in one after another.
+  useLayoutEffect(() => {
+    const list = earlierListRef.current;
+    const from = fromHeight.current;
+    fromHeight.current = null;
+    if (!list || from === null || prefersReducedMotion()) return;
+
+    const to = list.offsetHeight;
+    const easing = "cubic-bezier(0.22, 1, 0.36, 1)";
+    const duration = showEarlier ? 700 : 500;
+
+    // `clip` (not `hidden`) keeps the sticky dates working mid-animation.
+    list.style.overflow = "clip";
+    const resize = list.animate(
+      [{ height: `${from}px` }, { height: `${to}px` }],
+      { duration, easing },
+    );
+    resize.onfinish = resize.oncancel = () => {
+      list.style.overflow = "";
+    };
+
+    const rows = Array.from(list.children) as HTMLElement[];
+    const reveals = rows.map((row, i) =>
+      row.animate(
+        [
+          { opacity: 0, transform: "translateY(16px)" },
+          { opacity: 1, transform: "none" },
+        ],
+        {
+          duration: 500,
+          delay: Math.min(i, 10) * (showEarlier ? 70 : 35),
+          easing,
+          fill: "backwards",
+        },
+      ),
+    );
+
+    return () => {
+      resize.cancel();
+      reveals.forEach((a) => a.cancel());
+    };
+  }, [showEarlier]);
 
   // Fill the rail up to the middle of the viewport and light up the nodes
   // that have been passed. Written straight to the DOM to avoid re-renders.
@@ -384,7 +437,7 @@ export default function ExperienceSection() {
               </TimelineRow>
             </div>
 
-            <div id="earlier-career">
+            <div id="earlier-career" ref={earlierListRef}>
               {groupByCountry(earlierItems).map((group) => (
                 <Fragment key={group.country + group.years}>
                   <Chapter group={group} />
