@@ -10,13 +10,15 @@
 }
 
 .heading {
+  --ink: var(--text_secondary_color);
   font-weight: 400;
-  color: var(--text_secondary_color);
+  color: var(--ink);
 }
 
 .strong {
+  --ink: var(--text_primary_color);
   font-weight: 500;
-  color: var(--text_primary_color);
+  color: var(--ink);
 }
 
 .content {
@@ -41,7 +43,7 @@
       color-mix(in srgb, var(--text_active_color) 7%, transparent),
       transparent 70%
     );
-  animation: glow_on 1.2s ease-out both;
+  animation: glow_on 1.2s ease-out backwards;
 }
 
 @keyframes glow_on {
@@ -128,21 +130,29 @@
   }
 }
 
-/* bio: words come into focus one after another */
+/*
+ * bio: words come into focus one after another.
+ * The "blur" is a text-shadow on transparent text rather than a CSS filter:
+ * filters make mobile Safari rasterize the words into layers that stay
+ * slightly blurry afterwards, while text-shadow keeps them as real text.
+ */
 .word {
-  display: inline-block;
-  animation: word_in 0.45s ease-out both;
+  animation: word_in 0.45s ease-out backwards;
   animation-delay: calc(var(--bio_start) + var(--w) * var(--bio_speed));
 }
 
 @keyframes word_in {
   from {
-    opacity: 0;
-    filter: blur(4px);
+    color: transparent;
+    text-shadow: 0 0 8px transparent;
+  }
+  40% {
+    color: transparent;
+    text-shadow: 0 0 6px var(--ink);
   }
   to {
-    opacity: 1;
-    filter: none;
+    color: var(--ink);
+    text-shadow: 0 0 0 transparent;
   }
 }
 
@@ -265,7 +275,7 @@
 
 .social_icons {
   padding-top: 10px;
-  animation: icons_in 0.5s ease-out both;
+  animation: icons_in 0.5s ease-out backwards;
   animation-delay: var(--icons_start);
 }
 
@@ -278,7 +288,7 @@
 
 /* avatar: CRT power-on — dot, horizontal line, full picture, brightness settles */
 .avatar {
-  animation: crt_on 0.8s ease-out both;
+  animation: crt_on 0.8s ease-out backwards;
   animation-delay: 0.15s;
 }
 
