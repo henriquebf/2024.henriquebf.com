@@ -1,7 +1,10 @@
 .thumb {
-  display: none;
-  width: 540px;
-  height: 250px;
+  /* mobile: full-width screen keeping the 540x250 proportions */
+  width: 100%;
+  max-width: 540px;
+  aspect-ratio: 540 / 250;
+  margin-top: 40px;
+  margin-bottom: 20px;
   border-radius: 15px;
   overflow: hidden;
   background-color: var(--border_discreet_color);
@@ -16,6 +19,8 @@
 
 .thumb img {
   display: block;
+  width: 100%;
+  height: 100%;
   opacity: 0; /* screen off */
   /* phosphor glow + slight RGB split using the palette colors */
   filter: drop-shadow(1px 0 0 color-mix(in srgb, var(--accent_color) 55%, transparent))
@@ -119,7 +124,10 @@
 
 @media (min-width: 1200px) {
   .thumb {
-    display: block;
+    width: 540px;
+    height: 250px;
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   .line {
