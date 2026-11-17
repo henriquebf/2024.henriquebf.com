@@ -10,7 +10,8 @@ const saira = Saira({
 export const metadata: Metadata = {
   title: "Admin",
   description: null,
-  robots: "noindex, nofollow",
+  robots: { index: false, follow: false },
+  alternates: null,
   openGraph: null,
   twitter: null,
 };

@@ -17,14 +17,24 @@ export default function ProjectItem({ item }: { item: Item }) {
       <div className={styles.icons}>
         {item.github && (
           <div>
-            <a href={item.github} target="_blank" rel="noreferrer">
+            <a
+              href={item.github}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`${item.title} on GitHub`}
+            >
               <IconGithub size="20px" />
             </a>
           </div>
         )}
         {item.link && (
           <div>
-            <a href={item.link} target="_blank" rel="noreferrer">
+            <a
+              href={item.link}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Visit ${item.title}`}
+            >
               <IconExternalLink size="20px" />
             </a>
           </div>
