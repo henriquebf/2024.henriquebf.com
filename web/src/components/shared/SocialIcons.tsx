@@ -1,59 +1,32 @@
-import SocialGithub from "../svg/SocialGithub";
-import SocialInstagram from "../svg/SocialInstagram";
-import SocialLinkedin from "../svg/SocialLinkedin";
-import SocialStrava from "../svg/SocialStrava";
-import SocialEmail from "../svg/SocialEmail";
 import styles from "./SocialIcons.module.css";
 
+const socialLinks = [
+  { label: "GitHub", href: "https://github.com/henriquebf/" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/henrique-bf" },
+  { label: "Instagram", href: "https://www.instagram.com/henriquebf/" },
+  { label: "Strava", href: "https://www.strava.com/athletes/2498325" },
+];
+
 export default function SocialIcons() {
-  const size = "30px";
   return (
-    <div className={styles.social_icons}>
-      <div>
-        <a
-          href="https://github.com/henriquebf/"
-          rel="noreferrer"
-          target="_blank"
-        >
-          <SocialGithub size={size} />
-        </a>
-      </div>
-      <div>
-        <a
-          href="https://www.linkedin.com/in/henrique-bf"
-          rel="noreferrer"
-          target="_blank"
-        >
-          <SocialLinkedin size={size} />
-        </a>
-      </div>
-      <div>
-        <a
-          href="https://www.instagram.com/henriquebf/"
-          rel="noreferrer"
-          target="_blank"
-        >
-          <SocialInstagram size={size} />
-        </a>
-      </div>
-      <div>
-        <a
-          href="https://www.strava.com/athletes/2498325"
-          rel="noreferrer"
-          target="_blank"
-        >
-          <SocialStrava size={size} />
-        </a>
-      </div>
-      <div>
-        <a
-          href="mailto:contact@henriquebf.com"
-          rel="noreferrer"
-          target="_blank"
-        >
-          <SocialEmail size={size} />
-        </a>
-      </div>
-    </div>
+    <nav aria-label="Social profiles">
+      <ul className={styles.social_links}>
+        {socialLinks.map(({ label, href }) => (
+          <li key={label}>
+            <a
+              href={href}
+              rel="noreferrer"
+              target="_blank"
+              className={styles.link}
+            >
+              {label}
+              <span className={styles.arrow} aria-hidden="true">
+                ↗
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }

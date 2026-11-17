@@ -29,28 +29,37 @@ export default function Footer() {
   return (
     <footer id="footer" className={styles.footer}>
       <Container>
-        <div className={styles.wrapper}>
+        <div className={styles.contact}>
+          <p className={styles.prompt}>Have a product in mind?</p>
           <div className={styles.email}>
-            <a href={`mailto:${emailAddress}`}>{emailAddress}</a>
-            <div className={styles.icon} onClick={copyToClipboard}>
+            <a href={`mailto:${emailAddress}`} className={styles.email_link}>
+              {emailAddress}
+            </a>
+            <button
+              type="button"
+              className={styles.copy}
+              onClick={copyToClipboard}
+              aria-label="Copy email address"
+              title="Copy email address"
+            >
               <IconCopyClipboard size="20px" />
-            </div>
-            {hasCopied && (
-              <span
-                className={classNames([
-                  styles.copied,
-                  isFading ? styles.fading : "",
-                ])}
-              >
-                saved in clipboard
-              </span>
-            )}
+            </button>
+            <span
+              role="status"
+              className={classNames([
+                styles.copied,
+                hasCopied && !isFading ? styles.visible : "",
+              ])}
+            >
+              {hasCopied ? "Copied" : ""}
+            </span>
           </div>
-          <div>
-            <div className={styles.social}>
-              <SocialIcons />
-            </div>
-          </div>
+        </div>
+        <div className={styles.bottom}>
+          <span className={styles.copyright}>
+            © {new Date().getFullYear()} Henrique Ferreira
+          </span>
+          <SocialIcons />
         </div>
       </Container>
     </footer>

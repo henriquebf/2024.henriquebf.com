@@ -1,50 +1,94 @@
 .footer {
   position: relative;
   z-index: var(--z_header);
-  padding: 20px 0;
-  line-height: 30px;
   color: var(--text_primary_color);
+  background-color: var(--bg_primary_color);
+}
+
+/* ---- closing call to action ---- */
+.contact {
+  padding: 60px 0 50px;
+  text-align: center;
+}
+
+.prompt {
+  margin: 0 0 6px;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text_secondary_color);
 }
 
 .email {
-  display: none;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 4px 14px;
 }
 
-.social {
-  width: 190px;
-  margin: 0 auto;
+.email_link {
+  font-size: clamp(22px, 6vw, 40px);
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--text_primary_color);
+  transition: color 0.2s;
+}
+
+.email_link:hover,
+.email_link:focus-visible {
+  color: var(--text_active_color);
+}
+
+.copy {
+  display: inline-flex;
+  padding: 6px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+.copied {
+  min-width: 52px;
+  font-size: 14px;
+  color: var(--text_active_color);
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+
+.copied.visible {
+  opacity: 1;
+  transition-duration: 0.15s;
+}
+
+/* ---- bottom bar ---- */
+.bottom {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 0 28px;
+  border-top: 1px solid var(--border_discreet_color);
+}
+
+.copyright {
+  font-size: 14px;
+  color: var(--text_secondary_color);
 }
 
 @media (min-width: 1200px) {
-  .wrapper {
-    display: flex;
-    justify-content: space-between;
-    grid-template-columns: 50% 50%;
+  .contact {
+    padding: 90px 0 70px;
+    text-align: left;
   }
 
   .email {
-    display: block;
-    height: 30px;
+    justify-content: flex-start;
   }
 
-  .icon {
-    display: inline-block;
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-    margin-top: -4px;
-    margin-left: 10px;
-    vertical-align: middle;
-  }
-
-  .copied {
-    margin-left: 10px;
-    color: var(--text_secondary_color);
-    opacity: 1;
-    transition: opacity 1s;
-  }
-
-  .fading {
-    opacity: 0;
+  .bottom {
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
