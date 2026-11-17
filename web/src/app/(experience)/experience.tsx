@@ -14,8 +14,6 @@ const experienceItems = [
     position: `Product Engineer & Founder`,
     description: [
       `Neat was founded in June 2024 with the goal to collaborate in projects that require a generalist software engineering profile, in order to ship products in a short time period, delivering code quality for maintenance and reliability.`,
-      `Lovemail is a native iOS app originated from the acquisition of Tempo, a startup I previously co-founded in 2020. I have contributed writing a complete email engine in Swift, as well the HTML renderer and parser, and other minor integrations. I have also conducted the security assessment necessary to guarantee the api usage.`,
-      `Mineral Trade is a web platform that brings connectivity for services and supply chain in the mining business. I have fully contributed to the MVP specifications, designs, architecture and full-stack implementation using React and Typescript. Some automation workflow using AI was introduce in order to automatically generate translations for any added text during implementation.`,
     ],
     highlights: [`Lovemail`, `Mineral Trade`],
     bullets: ["Swift", "Typescript", "React", "Prisma ORM"],
@@ -23,6 +21,23 @@ const experienceItems = [
     link: {
       text: `Visit Neat website`,
       url: `https://thisisneat.co`,
+    },
+  },
+  {
+    time: `2025 - 2026`,
+    duration: `1 year 5 months`,
+    title: `Milence R&D B.V.`,
+    location: `Amsterdam, The Netherlands`,
+    position: `Software Engineer, Consultant`,
+    description: [
+      `As an external consultant, I have assisted Milence software engineering team in several internal micro-service migrations (authentication, site/asset information, etc), architectural decisions and implementation of full-stack features around the reservation and site availability systems.`,
+    ],
+    highlights: [`Reservations`, `Site Availability`, `Authentication`],
+    bullets: ["Typescript", "NestJS", "Kafka", "Azure"],
+    thumb: "experience-thumb-milence.svg",
+    link: {
+      text: `Visit Milence website`,
+      url: `https://milence.com/`,
     },
   },
   {
