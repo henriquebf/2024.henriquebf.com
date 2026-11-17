@@ -1,16 +1,20 @@
-/* mobile: tidy 2x2 grid, no separators to strand at line starts */
+/* mobile: one quiet row, no separators or arrows so it fits a phone width */
 .social_links {
-  display: grid;
-  grid-template-columns: repeat(2, max-content);
-  gap: 10px 36px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.5;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text_secondary_color);
+}
+
+.social_links .arrow {
+  display: none;
 }
 
 .link {
@@ -43,8 +47,13 @@
 /* desktop: one line with middot separators, matching the header nav */
 @media (min-width: 1200px) {
   .social_links {
-    display: flex;
     gap: 0;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+  }
+
+  .social_links .arrow {
+    display: inline;
   }
 
   .social_links > li + li::before {

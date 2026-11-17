@@ -39,8 +39,13 @@
   color: var(--text_active_color);
 }
 
+/* copy-to-clipboard is desktop only: on phones tapping the address opens Mail */
+.copy,
+.copied {
+  display: none;
+}
+
 .copy {
-  display: inline-flex;
   flex: none;
   padding: 6px;
   border: 0;
@@ -92,7 +97,12 @@
     gap: 14px;
   }
 
+  .copy {
+    display: inline-flex;
+  }
+
   .copied {
+    display: inline;
     position: static;
     margin: 0;
   }
