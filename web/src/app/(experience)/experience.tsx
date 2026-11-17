@@ -19,10 +19,16 @@ const experienceItems: ExperienceEntry[] = [
     location: `The Randstad, The Netherlands`,
     position: `Product Engineer & Founder`,
     description: [
-      `Neat was founded in June 2024 with the goal to collaborate in projects that require a generalist software engineering profile, in order to ship products in a short time period, delivering code quality for maintenance and reliability.`,
+      `Founded in June 2024, Neat is a digital product studio based in Delft, partnering with companies to build and scale digital products, collaborating from product specification and architecture to implementation and ongoing maintenance.`,
+      `Alongside client work in R&D consultancy, e-commerce and AI transformation, such as document extraction and RAG pipelines, Neat builds its own self-funded indie software: simple and privacy-friendly tools.`,
     ],
-    highlights: [`Lovemail`, `Mineral Trade`],
-    bullets: ["Swift", "Typescript", "React", "Prisma ORM"],
+    highlights: [
+      `neat-doc`,
+      `Mineral Trade`,
+      `Industry Intelligence`,
+      `Lovemail`,
+    ],
+    bullets: ["Swift", "Typescript", "React", "Prisma", "Electron"],
     thumb: "experience-thumb-neat.svg",
     link: {
       text: `Visit Neat website`,
@@ -36,7 +42,8 @@ const experienceItems: ExperienceEntry[] = [
     location: `Amsterdam, The Netherlands`,
     position: `Software Engineer, Consultant`,
     description: [
-      `As an external consultant, I have assisted the software engineering team in several micro-service migrations, introduction of event based architecture with Kafka and iterations around the reservation and site availability systems.`,
+      `As an external consultant, I have assisted the software engineering team in several micro-service migrations, introduction of event based architecture and fullstack iterations around the booking and site availability systems.`,
+      `Milence is building a public charging network for heavy-duty electric trucks across Europe. I have worked closely with product, engineering and infrastructure teams to deliver reliable systems and excellent experience for the clients.`,
     ],
     highlights: [`Reservations`, `Site Availability`, `Authentication`],
     bullets: ["Azure", "Typescript", "NestJS", "Kafka"],
