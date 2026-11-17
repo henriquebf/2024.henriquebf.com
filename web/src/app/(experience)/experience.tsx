@@ -81,7 +81,7 @@ const experienceItems: ExperienceEntry[] = [
       `Development of an Email client for OSX and mobile using Typescript (mostly). Designing the architecture from MVP state to production and leading a young and remote team of developers.`,
       `Beyond the technical duties, there was a lot of management for a multi-national business setup, accounting, investment contracts, payroll and last but not least, the business liquidation.`,
     ],
-    bullets: ["Typescript", "React + Redux", "Electron", "React Native"],
+    bullets: ["Typescript", "React", "Electron", "React Native"],
     thumb: "experience-thumb-tempo.svg",
     link: {
       text: `Visit Tempo website`,
@@ -109,7 +109,7 @@ const experienceItems: ExperienceEntry[] = [
       `XU Berlin (web survey)`,
       `Fluxdrive (bespoke CMS)`,
     ],
-    bullets: ["ES6+", "React + Redux", "Node", "MongoDB", "Docker"],
+    bullets: ["ES6+", "React", "Node", "MongoDB", "Docker"],
     thumb: "experience-thumb-pillar.svg",
     link: {
       text: `Visit Pillar website`,
@@ -246,7 +246,11 @@ const country = (item: ExperienceEntry) =>
     .pop()!
     .trim();
 
-type CountryGroup = { country: string; years: string; items: ExperienceEntry[] };
+type CountryGroup = {
+  country: string;
+  years: string;
+  items: ExperienceEntry[];
+};
 
 // Consecutive entries in the same country become one chapter of the timeline.
 function groupByCountry(items: ExperienceEntry[]): CountryGroup[] {
@@ -270,8 +274,12 @@ function groupByCountry(items: ExperienceEntry[]): CountryGroup[] {
   });
 }
 
-const recentItems = experienceItems.filter((i) => startYear(i) >= EARLIER_BEFORE);
-const earlierItems = experienceItems.filter((i) => startYear(i) < EARLIER_BEFORE);
+const recentItems = experienceItems.filter(
+  (i) => startYear(i) >= EARLIER_BEFORE,
+);
+const earlierItems = experienceItems.filter(
+  (i) => startYear(i) < EARLIER_BEFORE,
+);
 const earlierYears = `${Math.min(...earlierItems.map(startYear))} – ${
   EARLIER_BEFORE - 1
 }`;
@@ -368,7 +376,9 @@ export default function ExperienceSection() {
             <div ref={earlierRef} className={styles.earlier_anchor}>
               <TimelineRow
                 node="chapter"
-                date={<div className={styles.chapter_years}>{earlierYears}</div>}
+                date={
+                  <div className={styles.chapter_years}>{earlierYears}</div>
+                }
               >
                 <h3 className={styles.chapter}>Earlier career</h3>
               </TimelineRow>
@@ -380,13 +390,16 @@ export default function ExperienceSection() {
                   <Chapter group={group} />
                   {group.items.map((item) =>
                     showEarlier ? (
-                      <ExperienceItem key={item.title + item.time} item={item} />
+                      <ExperienceItem
+                        key={item.title + item.time}
+                        item={item}
+                      />
                     ) : (
                       <ExperienceCompact
                         key={item.title + item.time}
                         item={item}
                       />
-                    )
+                    ),
                   )}
                 </Fragment>
               ))}
