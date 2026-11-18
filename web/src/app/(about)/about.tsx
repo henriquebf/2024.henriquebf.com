@@ -128,7 +128,9 @@ export default function AboutSection() {
           <div className={styles.wrapper}>
             <div className={styles.screen}>
               <div className={styles.avatar}>
-                <div className={styles.avatar_image} />
+                <div className={styles.avatar_screen}>
+                  <div className={styles.avatar_image} />
+                </div>
               </div>
               <h1 className={styles.heading}>
                 <span className={styles.sr_only}>{toPlainText(NAME)}</span>
