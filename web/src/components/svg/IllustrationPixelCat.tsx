@@ -4,6 +4,8 @@
 // color, the body is a light tint of it and the eyes use the highlight color.
 //
 // Sprite legend: # outline, o body, e eye, - whisker, . empty.
+// The sitting pose keeps its eyes in their own group so they can blink: a
+// closed-eye pixel sits underneath and shows whenever the open eye is hidden.
 
 const RUN_BODY = [
   "...........#....#.",
@@ -33,10 +35,18 @@ const SIT = [
   "..##############.",
 ];
 
+// SIT split into its eyes and everything else, plus closed eyes in their place
+const onlyEyes = (rows: string[], mark: string) =>
+  rows.map((row) => row.replace(/[^e]/g, ".").replace(/e/g, mark));
+const SIT_BODY = SIT.map((row) => row.replace(/e/g, "o"));
+const SIT_EYES_OPEN = onlyEyes(SIT, "e");
+const SIT_EYES_CLOSED = onlyEyes(SIT, "c");
+
 const FILLS: Record<string, { fill: string; opacity?: number }> = {
   "#": { fill: "currentColor" },
   o: { fill: "currentColor", opacity: 0.18 },
   e: { fill: "var(--border_highlight_color)" },
+  c: { fill: "currentColor", opacity: 0.6 },
   "-": { fill: "currentColor", opacity: 0.5 },
 };
 
@@ -74,12 +84,14 @@ export default function IllustrationPixelCat({
   frameAClassName,
   frameBClassName,
   sitClassName,
+  blinkClassName,
 }: {
   className?: string;
   runClassName?: string;
   frameAClassName?: string;
   frameBClassName?: string;
   sitClassName?: string;
+  blinkClassName?: string;
 }) {
   return (
     <svg
@@ -100,7 +112,11 @@ export default function IllustrationPixelCat({
       </g>
       {/* sitting, once it has arrived */}
       <g className={sitClassName}>
-        <Sprite rows={SIT} x={1} />
+        <Sprite rows={SIT_BODY} x={1} />
+        <Sprite rows={SIT_EYES_CLOSED} x={1} />
+        <g className={blinkClassName}>
+          <Sprite rows={SIT_EYES_OPEN} x={1} />
+        </g>
       </g>
     </svg>
   );

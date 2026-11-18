@@ -499,6 +499,7 @@ export default function ExperienceSection() {
                 frameAClassName={styles.cat_frame_a}
                 frameBClassName={styles.cat_frame_b}
                 sitClassName={styles.cat_sit}
+                blinkClassName={styles.cat_blink}
               />
             </div>
           </div>
