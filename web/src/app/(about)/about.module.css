@@ -85,11 +85,13 @@
 .char::after {
   content: "";
   position: absolute;
+  /* same proportions as the header caret: 0.5em × 1.05em, 6px/15px gap */
   left: 100%;
-  top: 0.18em;
-  bottom: 0.12em;
+  top: 50%;
   width: 0.5em;
-  margin-left: 0.06em;
+  height: 1.05em;
+  margin-left: 0.4em;
+  transform: translateY(-50%);
   visibility: hidden;
   background-color: var(--text_active_color);
   box-shadow: 0 0 10px
