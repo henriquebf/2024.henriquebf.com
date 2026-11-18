@@ -1,6 +1,6 @@
 # henriquebf.com (2024)
 
-![image](https://github.com/user-attachments/assets/47314b75-fb42-40ee-86d0-288448385922)
+![henriquebf.com screenshot](assets/screenshot.png)
 
 ## Personal Portfolio
 
