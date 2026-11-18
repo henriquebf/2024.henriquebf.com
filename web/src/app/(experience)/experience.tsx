@@ -364,21 +364,29 @@ export default function ExperienceSection() {
 
   // Fill the rail up to the middle of the viewport and light up the nodes
   // that have been passed. Written straight to the DOM to avoid re-renders.
+  // Once the bulb switches on, the whole timeline stays lit for good.
   useEffect(() => {
     const timeline = timelineRef.current;
     if (!timeline) return;
     let frame = 0;
+    let lit = false;
 
     const update = () => {
       frame = 0;
       const rect = timeline.getBoundingClientRect();
       const center = window.innerHeight / 2;
-      const progress = Math.min(Math.max(center - rect.top, 0), rect.height);
+      const nodes = timeline.querySelectorAll<HTMLElement>("[data-node]");
+      const bulb = nodes[nodes.length - 1];
+      if (!lit && bulb && bulb.getBoundingClientRect().top < center) lit = true;
+
+      const progress = lit
+        ? rect.height
+        : Math.min(Math.max(center - rect.top, 0), rect.height);
       timeline.style.setProperty("--progress", `${progress}px`);
       // Only show the glowing head once the fill has length (rail starts 12px down)
       timeline.dataset.filling = String(progress > 12);
-      timeline.querySelectorAll<HTMLElement>("[data-node]").forEach((node) => {
-        const reached = node.getBoundingClientRect().top < center;
+      nodes.forEach((node) => {
+        const reached = lit || node.getBoundingClientRect().top < center;
         node.dataset.reached = String(reached);
       });
     };
