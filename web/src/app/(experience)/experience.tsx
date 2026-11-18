@@ -9,6 +9,7 @@ import ExperienceItem, {
 } from "@/components/shared/ExperienceItem";
 import IconArrow from "@/components/svg/IconArrow";
 import IconBulb from "@/components/svg/IconBulb";
+import IllustrationPixelCat from "@/components/svg/IllustrationPixelCat";
 import { classNames } from "@/helpers/utilsHelper";
 import styles from "./experience.module.css";
 
@@ -383,6 +384,7 @@ export default function ExperienceSection() {
         ? rect.height
         : Math.min(Math.max(center - rect.top, 0), rect.height);
       timeline.style.setProperty("--progress", `${progress}px`);
+      timeline.dataset.lit = String(lit);
       // Only show the glowing head once the fill has length (rail starts 12px down)
       timeline.dataset.filling = String(progress > 12);
       nodes.forEach((node) => {
@@ -486,6 +488,19 @@ export default function ExperienceSection() {
             <span data-node className={styles.bulb} aria-hidden="true">
               <IconBulb size={34} glassClassName={styles.bulb_glass} />
             </span>
+
+            {/* once the bulb lights up, a pixel cat dashes along the section
+                border leaving a trail of light, then sits down */}
+            <div className={styles.cat} aria-hidden="true">
+              <span className={styles.cat_trail} />
+              <IllustrationPixelCat
+                className={styles.cat_sprite}
+                runClassName={styles.cat_run}
+                frameAClassName={styles.cat_frame_a}
+                frameBClassName={styles.cat_frame_b}
+                sitClassName={styles.cat_sit}
+              />
+            </div>
           </div>
         </div>
       </Container>

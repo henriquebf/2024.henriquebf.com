@@ -5,7 +5,8 @@
 }
 
 .content {
-  padding: 20px 0 60px 0;
+  --content-pad-bottom: 60px;
+  padding: 20px 0 var(--content-pad-bottom) 0;
   border-bottom: 1px solid var(--border_discreet_color);
 }
 
@@ -67,6 +68,137 @@
 
 .bulb[data-reached="true"] .bulb_glass {
   fill-opacity: 0.35;
+}
+
+/* pixel cat under the bulb, standing on the section's bottom border and
+   lined up with the timeline text. Hidden until the bulb lights up; then it
+   runs --run to the right, its trail of light following it, and sits down. */
+.cat {
+  --px: 3px; /* size of one sprite pixel */
+  --run: 120px;
+  --run-delay: 0.4s;
+  --run-time: 1.6s;
+  --run-ease: cubic-bezier(0.3, 0.5, 0.4, 1);
+  position: absolute;
+  bottom: calc(-1 * var(--content-pad-bottom));
+  left: calc(var(--date-w) + var(--rail-w));
+  width: calc(var(--run) + 18 * var(--px));
+  height: calc(12 * var(--px));
+  color: var(--text_secondary_color);
+  pointer-events: none;
+}
+
+.cat_sprite {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: block;
+  width: calc(18 * var(--px));
+  height: calc(12 * var(--px));
+  opacity: 0;
+}
+
+/* three bands of light at the height of the running cat's body, starting at
+   its back and fading out towards where it came from */
+.cat_trail {
+  position: absolute;
+  bottom: calc(3 * var(--px));
+  left: calc(2 * var(--px));
+  width: var(--run);
+  height: calc(3 * var(--px));
+  background: linear-gradient(
+    to bottom,
+    var(--border_highlight_color) 0 33.4%,
+    color-mix(in srgb, var(--border_highlight_color) 55%, transparent) 33.4%
+      66.7%,
+    color-mix(in srgb, var(--border_highlight_color) 25%, transparent) 66.7%
+  );
+  mask-image: linear-gradient(to right, transparent, #000 85%);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.cat_frame_b,
+.cat_sit {
+  opacity: 0;
+}
+
+.timeline[data-lit="true"] .cat_sprite {
+  animation: cat-run var(--run-time) var(--run-ease) var(--run-delay) both;
+}
+
+.timeline[data-lit="true"] .cat_trail {
+  animation:
+    cat-trail var(--run-time) var(--run-ease) var(--run-delay) both,
+    cat-fade 0.8s ease calc(var(--run-delay) + var(--run-time) + 0.2s) forwards;
+}
+
+/* legs alternate while running (8 steps of 0.2s = --run-time) */
+.timeline[data-lit="true"] .cat_frame_a {
+  animation: cat-step-a 0.2s steps(1) var(--run-delay) 8;
+}
+
+.timeline[data-lit="true"] .cat_frame_b {
+  animation: cat-step-b 0.2s steps(1) var(--run-delay) 8;
+}
+
+/* swap the running pose for the sitting one on arrival */
+.timeline[data-lit="true"] .cat_run {
+  animation: cat-fade 0s calc(var(--run-delay) + var(--run-time)) forwards;
+}
+
+.timeline[data-lit="true"] .cat_sit {
+  animation: cat-show 0s calc(var(--run-delay) + var(--run-time)) forwards;
+}
+
+@keyframes cat-run {
+  from {
+    opacity: 0;
+    transform: none;
+  }
+  6% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: translateX(var(--run));
+  }
+}
+
+@keyframes cat-trail {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes cat-step-a {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes cat-step-b {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes cat-fade {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes cat-show {
+  to {
+    opacity: 1;
+  }
 }
 
 /* the part already scrolled past, with a glowing head */
@@ -177,6 +309,12 @@
   .chapter {
     padding-left: 16px;
   }
+
+  .cat {
+    --px: 4px;
+    --run: 220px;
+    left: calc(var(--date-w) + var(--rail-w) + 16px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -187,5 +325,26 @@
   .bulb,
   .bulb_glass {
     transition: none;
+  }
+
+  /* no dash: the cat simply appears sitting at the end of its run */
+  .timeline[data-lit="true"] .cat_sprite {
+    animation: none;
+    opacity: 1;
+    transform: translateX(var(--run));
+  }
+
+  .timeline[data-lit="true"] .cat_trail {
+    display: none;
+  }
+
+  .timeline[data-lit="true"] .cat_run {
+    animation: none;
+    opacity: 0;
+  }
+
+  .timeline[data-lit="true"] .cat_sit {
+    animation: none;
+    opacity: 1;
   }
 }
