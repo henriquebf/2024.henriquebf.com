@@ -1,5 +1,6 @@
 import { getSchedule } from "@/helpers/cyclingHelper";
 import Goal from "@/models/Goal";
+import ProgressBar from "./ProgressBar";
 import styles from "./cycling.module.css";
 
 export default async function Cycling() {
@@ -30,14 +31,7 @@ export default async function Cycling() {
         </b>{" "}
         {schedule > 0 ? "ahead of" : "behind"} schedule.
       </p>
-      <div
-        className={styles.progress_bar}
-        style={{
-          backgroundImage: `linear-gradient(to right, var(--progress_complete), var(--progress_complete) ${progress}%, var(--progress_remaining) ${
-            progress + 1
-          }%, var(--progress_remaining))`,
-        }}
-      ></div>
+      <ProgressBar progress={Number(progress)} />
     </div>
   );
 }
