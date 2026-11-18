@@ -17,7 +17,7 @@ const BIO: Segment[] = [
   { text: "road cycling", strong: true },
   { text: " enthusiast and " },
   { text: "product engineer", strong: true },
-  { text: " with over 25 years of experience shipping " },
+  { text: " with 25+ years of experience shipping " },
   { text: "digital products", strong: true },
   { text: " for web, desktop and mobile platforms with highest standards." },
 ];
