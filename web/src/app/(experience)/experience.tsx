@@ -237,6 +237,7 @@ const experienceItems: ExperienceEntry[] = [
       `In my graduation thesis I have developed an out-of-the-box implementation of the trajectory generation for a robot of type SCARA. It was visually simulated in a 3D robot plugin for Matlab.`,
     ],
     bullets: [`CIM`, `C++`, `Electronics`, `Robotics`, `PID`],
+    alwaysExpanded: true,
   },
 ];
 
@@ -454,7 +455,7 @@ export default function ExperienceSection() {
                 <Fragment key={group.country + group.years}>
                   <Chapter group={group} />
                   {group.items.map((item) =>
-                    showEarlier ? (
+                    showEarlier || item.alwaysExpanded ? (
                       <ExperienceItem
                         key={item.title + item.time}
                         item={item}

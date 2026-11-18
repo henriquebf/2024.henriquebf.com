@@ -22,6 +22,8 @@ export type ExperienceEntry = {
   bullets: string[];
   thumb?: string;
   link?: Link;
+  // Shown in full even while "Earlier career" is collapsed.
+  alwaysExpanded?: boolean;
 };
 
 // One row of the vertical timeline: date column, rail node, content.
@@ -40,12 +42,21 @@ export function TimelineRow({
   children: ReactNode;
 }) {
   return (
-    <div className={classNames([styles.row, styles[`row_${node}`], className ?? ""])}>
+    <div
+      className={classNames([
+        styles.row,
+        styles[`row_${node}`],
+        className ?? "",
+      ])}
+    >
       <div className={styles.date}>
         <div className={stickyDate ? styles.sticky : ""}>{date}</div>
       </div>
       <div className={styles.rail_cell} aria-hidden="true">
-        <span data-node className={classNames([styles.node, styles[`node_${node}`]])} />
+        <span
+          data-node
+          className={classNames([styles.node, styles[`node_${node}`]])}
+        />
       </div>
       <div className={styles.body}>{children}</div>
     </div>
@@ -100,7 +111,10 @@ export default function ExperienceItem({ item }: { item: ExperienceEntry }) {
 // Compact one-line version, used for the collapsed early career.
 export function ExperienceCompact({ item }: { item: ExperienceEntry }) {
   return (
-    <TimelineRow node="compact" date={<div className={styles.date_time}>{item.time}</div>}>
+    <TimelineRow
+      node="compact"
+      date={<div className={styles.date_time}>{item.time}</div>}
+    >
       <div className={styles.compact}>
         <span className={styles.compact_title}>{item.title}</span>
         <span className={styles.compact_meta}>
@@ -127,14 +141,17 @@ function CrtThumb({ src, alt }: { src: string; alt: string }) {
           observer.disconnect();
         }
       },
-      { threshold: 0.4 }
+      { threshold: 0.4 },
     );
     observer.observe(element);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <div ref={ref} className={classNames([styles.thumb, isOn ? styles.on : ""])}>
+    <div
+      ref={ref}
+      className={classNames([styles.thumb, isOn ? styles.on : ""])}
+    >
       <Image src={`/${src}`} alt={alt} width={540} height={250} />
     </div>
   );
