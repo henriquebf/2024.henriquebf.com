@@ -17,13 +17,6 @@ const saira = Saira({
   subsets: ["latin"],
 });
 
-const ogImage = {
-  url: "/meta-opengraph.jpg",
-  width: 1200,
-  height: 630,
-  alt: title,
-};
-
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title,
@@ -52,13 +45,11 @@ export const metadata: Metadata = {
     siteName,
     locale: "en_US",
     type: "website",
-    images: [ogImage],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description,
-    images: [ogImage],
   },
   icons: {
     icon: "/favicon.png",
@@ -89,7 +80,7 @@ const jsonLd = {
       name: siteName,
       url: siteUrl,
       image: `${siteUrl}/avatar.jpg`,
-      jobTitle: "Fullstack Developer",
+      jobTitle: "Product Engineer",
       description,
       email: "mailto:contact@henriquebf.com",
       address: {
