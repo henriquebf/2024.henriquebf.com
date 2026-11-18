@@ -125,25 +125,28 @@ export function ExperienceCompact({ item }: { item: ExperienceEntry }) {
   );
 }
 
-// Logo thumbnail that "switches on" like an old CRT the first time it scrolls
-// into view, then stays static.
+// Logo thumbnail that "switches on" like an old CRT the first time its
+// timeline dot lights up, then stays static.
 function CrtThumb({ src, alt }: { src: string; alt: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [isOn, setOn] = useState(false);
 
   useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setOn(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.4 },
-    );
-    observer.observe(element);
+    // The rail node's `data-reached` is written by the timeline scroll handler.
+    const node = ref.current
+      ?.closest(`.${styles.row}`)
+      ?.querySelector<HTMLElement>("[data-node]");
+    if (!node) return;
+    const check = () => {
+      if (node.dataset.reached !== "true") return false;
+      setOn(true);
+      return true;
+    };
+    if (check()) return;
+    const observer = new MutationObserver(() => {
+      if (check()) observer.disconnect();
+    });
+    observer.observe(node, { attributeFilter: ["data-reached"] });
     return () => observer.disconnect();
   }, []);
 
