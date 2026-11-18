@@ -65,6 +65,12 @@
   background-color: var(--border_highlight_color);
   box-shadow: 0 0 12px 3px
     color-mix(in srgb, var(--border_highlight_color) 55%, transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.timeline[data-filling="true"] .rail_fill::after {
+  opacity: 1;
 }
 
 /* ---- chapter markers (country / earlier career) ---- */

@@ -374,6 +374,8 @@ export default function ExperienceSection() {
       const center = window.innerHeight / 2;
       const progress = Math.min(Math.max(center - rect.top, 0), rect.height);
       timeline.style.setProperty("--progress", `${progress}px`);
+      // Only show the glowing head once the fill has length (rail starts 12px down)
+      timeline.dataset.filling = String(progress > 12);
       timeline.querySelectorAll<HTMLElement>("[data-node]").forEach((node) => {
         const reached = node.getBoundingClientRect().top < center;
         node.dataset.reached = String(reached);
