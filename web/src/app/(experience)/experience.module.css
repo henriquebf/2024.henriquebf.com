@@ -28,15 +28,45 @@
 .rail {
   position: absolute;
   top: 12px;
-  bottom: 0;
+  bottom: 31px; /* runs into the bulb's cap like a cord */
   left: calc(var(--rail-x) - 1px);
   width: 2px;
   pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    var(--border_discreet_color) 85%,
-    transparent
-  );
+  background-color: var(--border_discreet_color);
+}
+
+/* light bulb hanging from the end of the rail, lit once the fill reaches it */
+.bulb {
+  position: absolute;
+  bottom: 0;
+  left: var(--rail-x);
+  display: flex;
+  transform: translateX(-50%);
+  color: var(--border_discreet_color);
+  transition:
+    color 0.4s,
+    filter 0.4s;
+}
+
+.bulb_glass {
+  fill: currentColor;
+  fill-opacity: 0;
+  transition: fill-opacity 0.4s;
+}
+
+.bulb[data-reached="true"] {
+  color: var(--border_highlight_color);
+  filter: drop-shadow(
+      0 0 4px color-mix(in srgb, var(--border_highlight_color) 80%, transparent)
+    )
+    drop-shadow(
+      0 0 14px
+        color-mix(in srgb, var(--border_highlight_color) 50%, transparent)
+    );
+}
+
+.bulb[data-reached="true"] .bulb_glass {
+  fill-opacity: 0.35;
 }
 
 /* the part already scrolled past, with a glowing head */
@@ -152,5 +182,10 @@
 @media (prefers-reduced-motion: reduce) {
   .rail_fill::after {
     box-shadow: none;
+  }
+
+  .bulb,
+  .bulb_glass {
+    transition: none;
   }
 }

@@ -8,6 +8,7 @@ import ExperienceItem, {
   TimelineRow,
 } from "@/components/shared/ExperienceItem";
 import IconArrow from "@/components/svg/IconArrow";
+import IconBulb from "@/components/svg/IconBulb";
 import { classNames } from "@/helpers/utilsHelper";
 import styles from "./experience.module.css";
 
@@ -472,6 +473,11 @@ export default function ExperienceSection() {
                 </Fragment>
               ))}
             </div>
+
+            {/* the bulb the rail powers once the timeline is fully scrolled */}
+            <span data-node className={styles.bulb} aria-hidden="true">
+              <IconBulb size={34} glassClassName={styles.bulb_glass} />
+            </span>
           </div>
         </div>
       </Container>
