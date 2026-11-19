@@ -51,10 +51,6 @@ export const metadata: Metadata = {
     title,
     description,
   },
-  icons: {
-    icon: "/favicon.png",
-    apple: "/favicon.png",
-  },
 };
 
 export const viewport: Viewport = {
