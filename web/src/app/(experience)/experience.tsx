@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { track } from "@vercel/analytics";
 import Container from "@/components/layout/Container";
 import ExperienceItem, {
   ExperienceCompact,
@@ -378,7 +379,10 @@ export default function ExperienceSection() {
       const center = window.innerHeight / 2;
       const nodes = timeline.querySelectorAll<HTMLElement>("[data-node]");
       const bulb = nodes[nodes.length - 1];
-      if (!lit && bulb && bulb.getBoundingClientRect().top < center) lit = true;
+      if (!lit && bulb && bulb.getBoundingClientRect().top < center) {
+        lit = true;
+        track("TimelineCompleted");
+      }
 
       const progress = lit
         ? rect.height
