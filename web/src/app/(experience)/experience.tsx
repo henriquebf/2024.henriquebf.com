@@ -309,11 +309,84 @@ function Chapter({ group }: { group: CountryGroup }) {
 export default function ExperienceSection() {
   const timelineRef = useRef<HTMLDivElement>(null);
   const earlierListRef = useRef<HTMLDivElement>(null);
+  const catRef = useRef<HTMLDivElement>(null);
   const fromHeight = useRef<number | null>(null);
   const [showEarlier, setShowEarlier] = useState(false);
 
   const prefersReducedMotion = () =>
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Each click on the sitting cat walks it another --run along the border,
+  // trailing light like its first dash. It stops at either end of the border,
+  // and when it's close to the end it faces it turns around instead. Written
+  // straight to the DOM like the rail; the styles take over from the intro
+  // once data-state is set.
+  const walkCat = () => {
+    const cat = catRef.current;
+    const sprite = cat?.querySelector("svg");
+    const trail = cat?.querySelector<HTMLElement>(`.${styles.cat_trail}`);
+    if (!cat || !sprite || !trail || cat.dataset.state === "walking") return;
+
+    const box = cat.getBoundingClientRect();
+    const rect = sprite.getBoundingClientRect();
+    const px = rect.width / 18; // one sprite pixel
+    const step = parseFloat(getComputedStyle(cat).getPropertyValue("--run"));
+    const from = rect.left - box.left;
+    const max = box.width - rect.width;
+    // too close to the end it's facing (less than half a step left): turn
+    let dir = Number(cat.style.getPropertyValue("--dir")) || 1;
+    const room = dir > 0 ? max - from : from;
+    if (room < step / 2) dir = -dir;
+    const to = Math.min(Math.max(from + dir * step, 0), max);
+    const distance = Math.abs(to - from);
+
+    cat.style.setProperty("--x", `${to}px`);
+    cat.style.setProperty("--dir", String(dir));
+    if (prefersReducedMotion() || distance < 1) {
+      cat.dataset.state = "sitting";
+      return;
+    }
+    cat.dataset.state = "walking";
+
+    // same pace and easing as the first dash
+    const duration = (distance / step) * 1600;
+    const easing = "cubic-bezier(0.3, 0.5, 0.4, 1)";
+    const walk = sprite.animate(
+      [
+        { transform: `translateX(${from}px) scaleX(${dir})` },
+        { transform: `translateX(${to}px) scaleX(${dir})` },
+      ],
+      { duration, easing },
+    );
+    walk.onfinish = walk.oncancel = () => {
+      cat.dataset.state = "sitting";
+    };
+
+    // the trail grows from where it set off, starting at its back
+    trail.getAnimations().forEach((a) => a.cancel());
+    const right = dir > 0;
+    trail.style.left = `${right ? from + 2 * px : to + 16 * px}px`;
+    trail.style.width = `${distance}px`;
+    trail.style.transformOrigin = right ? "left" : "right";
+    trail.style.maskImage = `linear-gradient(to ${
+      right ? "right" : "left"
+    }, transparent, #000 85%)`;
+    const total = duration + 1000; // then holds 0.2s and fades for 0.8s
+    trail.animate(
+      [
+        { offset: 0, transform: "scaleX(0)", opacity: 1, easing },
+        { offset: duration / total, transform: "scaleX(1)", opacity: 1 },
+        {
+          offset: (duration + 200) / total,
+          transform: "scaleX(1)",
+          opacity: 1,
+          easing: "ease",
+        },
+        { offset: 1, transform: "scaleX(1)", opacity: 0 },
+      ],
+      { duration: total },
+    );
+  };
 
   const toggleEarlier = () => {
     fromHeight.current = earlierListRef.current?.offsetHeight ?? null;
@@ -494,8 +567,14 @@ export default function ExperienceSection() {
             </span>
 
             {/* once the bulb lights up, a pixel cat dashes along the section
-                border leaving a trail of light, then sits down */}
-            <div className={styles.cat} aria-hidden="true">
+                border leaving a trail of light, then sits down; clicks walk
+                it along the border */}
+            <div
+              ref={catRef}
+              className={styles.cat}
+              aria-hidden="true"
+              onClick={walkCat}
+            >
               <span className={styles.cat_trail} />
               <IllustrationPixelCat
                 className={styles.cat_sprite}

@@ -70,19 +70,22 @@
   fill-opacity: 0.35;
 }
 
-/* pixel cat under the bulb, standing on the section's bottom border and
-   lined up with the timeline text. Hidden until the bulb lights up; then it
-   runs --run to the right, its trail of light following it, and sits down. */
+/* pixel cat under the bulb, standing on the section's bottom border. The
+   box spans the whole border so the cat can never walk off it. Hidden until
+   the bulb lights up; then it runs --run to the right from --start (lined up
+   with the timeline text), its trail of light following it, and sits down.
+   Each click after that walks it another --run, turning at either end. */
 .cat {
   --px: 3px; /* size of one sprite pixel */
+  --start: calc(var(--date-w) + var(--rail-w));
   --run: 120px;
   --run-delay: 0.4s;
   --run-time: 1.6s;
   --run-ease: cubic-bezier(0.3, 0.5, 0.4, 1);
   position: absolute;
   bottom: calc(-1 * var(--content-pad-bottom));
-  left: calc(var(--date-w) + var(--rail-w));
-  width: calc(var(--run) + 18 * var(--px));
+  left: 0;
+  right: 0;
   height: calc(12 * var(--px));
   color: var(--text_secondary_color);
   pointer-events: none;
@@ -96,6 +99,8 @@
   width: calc(18 * var(--px));
   height: calc(12 * var(--px));
   opacity: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* three bands of light at the height of the running cat's body, starting at
@@ -103,7 +108,7 @@
 .cat_trail {
   position: absolute;
   bottom: calc(3 * var(--px));
-  left: calc(2 * var(--px));
+  left: calc(var(--start) + 2 * var(--px));
   width: var(--run);
   height: calc(3 * var(--px));
   background: linear-gradient(
@@ -124,7 +129,9 @@
 }
 
 .timeline[data-lit="true"] .cat_sprite {
-  animation: cat-run var(--run-time) var(--run-ease) var(--run-delay) both;
+  animation:
+    cat-run var(--run-time) var(--run-ease) var(--run-delay) both,
+    cat-clickable 0s calc(var(--run-delay) + var(--run-time)) forwards;
 }
 
 .timeline[data-lit="true"] .cat_trail {
@@ -157,6 +164,51 @@
     calc(var(--run-delay) + var(--run-time) + 0.8s) infinite;
 }
 
+/* after the first click the script drives the cat: it sits at --x facing
+   --dir (1 right, -1 left), and walks with the position and trail animated
+   from the script while the legs alternate here */
+.timeline[data-lit="true"] .cat[data-state] .cat_sprite {
+  animation: none;
+  opacity: 1;
+  transform: translateX(var(--x)) scaleX(var(--dir));
+  pointer-events: auto;
+}
+
+.timeline[data-lit="true"] .cat[data-state] .cat_trail {
+  animation: none;
+  opacity: 0;
+}
+
+.timeline[data-lit="true"] .cat[data-state="sitting"] .cat_run,
+.timeline[data-lit="true"] .cat[data-state="walking"] .cat_sit {
+  animation: none;
+  opacity: 0;
+}
+
+.timeline[data-lit="true"] .cat[data-state="sitting"] .cat_sit,
+.timeline[data-lit="true"] .cat[data-state="walking"] .cat_run {
+  animation: none;
+  opacity: 1;
+}
+
+.timeline[data-lit="true"] .cat[data-state="sitting"] .cat_blink {
+  animation: cat-blink 7s steps(1) 0.8s infinite;
+}
+
+.timeline[data-lit="true"] .cat[data-state="walking"] .cat_frame_a {
+  animation: cat-step-a 0.2s steps(1) infinite;
+}
+
+.timeline[data-lit="true"] .cat[data-state="walking"] .cat_frame_b {
+  animation: cat-step-b 0.2s steps(1) infinite;
+}
+
+@keyframes cat-clickable {
+  to {
+    pointer-events: auto;
+  }
+}
+
 @keyframes cat-blink {
   0% {
     opacity: 0;
@@ -181,14 +233,14 @@
 @keyframes cat-run {
   from {
     opacity: 0;
-    transform: none;
+    transform: translateX(var(--start));
   }
   6% {
     opacity: 1;
   }
   to {
     opacity: 1;
-    transform: translateX(var(--run));
+    transform: translateX(calc(var(--start) + var(--run)));
   }
 }
 
@@ -339,8 +391,8 @@
 
   .cat {
     --px: 4px;
+    --start: calc(var(--date-w) + var(--rail-w) + 16px);
     --run: 220px;
-    left: calc(var(--date-w) + var(--rail-w) + 16px);
   }
 }
 
@@ -358,7 +410,13 @@
   .timeline[data-lit="true"] .cat_sprite {
     animation: none;
     opacity: 1;
-    transform: translateX(var(--run));
+    transform: translateX(calc(var(--start) + var(--run)));
+    pointer-events: auto;
+  }
+
+  /* clicks move it straight to its next spot (see walkCat) */
+  .timeline[data-lit="true"] .cat[data-state] .cat_blink {
+    animation: none;
   }
 
   .timeline[data-lit="true"] .cat_trail {
